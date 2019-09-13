@@ -47,7 +47,7 @@ public class NotUntappd {
 
     }
 
-    private BeerEntry newBeerEntry() {
+    private void newBeerEntry() {
         BeerEntry beerEntry = new BeerEntry();
 
         System.out.println("Please enter a beer name: ");
@@ -61,8 +61,6 @@ public class NotUntappd {
         String comments = scanner.nextLine();
 
         addBeer(beerEntry, name, brewery, rating, comments);
-
-        return beerEntry;
 
     }
 

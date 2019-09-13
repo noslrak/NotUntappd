@@ -22,7 +22,8 @@ public class BeerEntry {
     public void setComments(String comments) {this.comments = comments;}
 
     public String toString() {
-        return "Beer: " + beerName + "Brewery: " + brewery + "Rating: " + rating + " " + "Comments: " + comments;
+        return "Beer: " + beerName + " " + "Brewery: " + brewery + " " + "Rating: " + rating + " " + "Comments: "
+                + comments;
     }
 
 }
