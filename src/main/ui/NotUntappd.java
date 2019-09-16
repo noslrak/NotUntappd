@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,11 +18,10 @@ public class NotUntappd {
         String operation;
 
         while (true) {
-            System.out.println("Please select an option: [1] Add a new beer entry [2] Search beer list " +
-                    "[3] View all beers [4] Quit");
+            System.out.println("Please select an option: [1] Add a new beer entry [2] Search beer list "
+                    + "[3] View all beers [4] Quit");
             operation = scanner.nextLine();
             System.out.println("You have selected: " + printOperation(operation));
-            BeerEntry beerEntry = new BeerEntry();
             if (operation.equals("1")) {
                 newBeerEntry();
             } else if (operation.equals("2")) {
@@ -52,6 +51,8 @@ public class NotUntappd {
             case "4":
                 message = "[4] Quit";
                 break;
+            default: // do nothing
+                break;
         }
         return message;
     }
@@ -65,10 +66,9 @@ public class NotUntappd {
         String brewery = scanner.nextLine();
         System.out.println("Please enter a rating for the beer: ");
         float rating = scanner.nextFloat();
-        System.out.println("Please enter any comments or leave blank: ");
         scanner.nextLine();
+        System.out.println("Please enter any comments or leave blank: ");
         String comments = scanner.nextLine();
-
         addBeer(beerEntry, name, brewery, rating, comments);
     }
 

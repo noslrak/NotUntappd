@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 public class BeerEntry {
     private String beerName;
@@ -13,13 +13,21 @@ public class BeerEntry {
         comments = "";
     }
 
-    void setBeerName(String beerName) {this.beerName = beerName;}
+    void setBeerName(String beerName) {
+        this.beerName = beerName;
+    }
 
-    void setBrewery(String brewery) {this.brewery = brewery; }
+    void setBrewery(String brewery) {
+        this.brewery = brewery;
+    }
 
-    void setRating(float rating) {this.rating = rating;}
+    void setRating(float rating) {
+        this.rating = rating;
+    }
 
-    void setComments(String comments) {this.comments = comments;}
+    void setComments(String comments) {
+        this.comments = comments;
+    }
 
     public String toString() {
         return "Beer: " + beerName + " " + "Brewery: " + brewery + " " + "Rating: " + rating + " " + "Comments: "
