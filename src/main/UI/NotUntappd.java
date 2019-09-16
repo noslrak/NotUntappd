@@ -9,7 +9,7 @@ public class NotUntappd {
     private Scanner scanner;
 
     public NotUntappd() {
-        beerList = new ArrayList<> ();
+        beerList = new ArrayList<>();
         scanner = new Scanner(System.in);
         processOperations();
     }
@@ -18,33 +18,44 @@ public class NotUntappd {
         String operation;
 
         while (true) {
-            System.out.println("Please select an option: [1] Add a new beer entry [2] Find a previous beer entry " +
-                    "[3] View all beers [4] Quit" );
+            System.out.println("Please select an option: [1] Add a new beer entry [2] Search beer list " +
+                    "[3] View all beers [4] Quit");
             operation = scanner.nextLine();
-            System.out.println("You have selected: " + operation);
+            System.out.println("You have selected: " + printOperation(operation));
             BeerEntry beerEntry = new BeerEntry();
-
-            if (operation.equals("1")) {
-                // Creates a new beer entry
-                newBeerEntry();
-            }
-
-            if (operation.equals("2")) {
-                // stub, attempt to retrieve a specific beer
-            }
-
-            if (operation.equals("3")) {
-                // Prints out the current beer list
-                System.out.println("Current beer list: " + beerList);
-            }
-
+            // creates new beer entry
+            if (operation.equals("1")) {newBeerEntry();}
+            // stub, attempt to retrieve a specific beer}
+            if (operation.equals("2")) {}
+            // prints current beer list
+            if (operation.equals("3")) { System.out.println("Current beer list: " + beerList);}
             if (operation.equals("4")) {
-                System.out.println("Exiting");
+                System.out.println("Quitting");
                 break;
             }
 
         }
+    }
 
+    private String printOperation(String operation) {
+        String message = "";
+
+        switch (operation) {
+            case "1" :
+                message = "[1] Add a new beer entry";
+                break;
+            case "2" :
+                message = "[2] Search beer list";
+                break;
+            case "3" :
+                message = "[3] View all beers";
+                break;
+            case "4" :
+                message = "[4] Quit";
+                break;
+        }
+
+        return message;
     }
 
     private void newBeerEntry() {
@@ -64,12 +75,16 @@ public class NotUntappd {
 
     }
 
-    private void addBeer(BeerEntry beerEntry,String name, String brewery, float rating, String comments) {
+    private void addBeer(BeerEntry beerEntry, String name, String brewery, float rating, String comments) {
         beerEntry.setBeerName(name);
         beerEntry.setBrewery(brewery);
         beerEntry.setRating(rating);
         beerEntry.setComments(comments);
         beerList.add(beerEntry);
+    }
+
+    private void searchBeerList() {
+
     }
 
     public static void main(String[] args) {
