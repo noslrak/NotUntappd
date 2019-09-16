@@ -8,7 +8,7 @@ public class NotUntappd {
     private ArrayList<BeerEntry> beerList;
     private Scanner scanner;
 
-    public NotUntappd() {
+    private NotUntappd() {
         beerList = new ArrayList<>();
         scanner = new Scanner(System.in);
         processOperations();
@@ -23,17 +23,16 @@ public class NotUntappd {
             operation = scanner.nextLine();
             System.out.println("You have selected: " + printOperation(operation));
             BeerEntry beerEntry = new BeerEntry();
-            // creates new beer entry
-            if (operation.equals("1")) {newBeerEntry();}
-            // stub, attempt to retrieve a specific beer}
-            if (operation.equals("2")) {}
-            // prints current beer list
-            if (operation.equals("3")) { System.out.println("Current beer list: " + beerList);}
-            if (operation.equals("4")) {
+            if (operation.equals("1")) {
+                newBeerEntry();
+            } else if (operation.equals("2")) {
+                searchBeerList();
+            } else if (operation.equals("3")) {
+                System.out.println("Current beer list: " + beerList);
+            } else if (operation.equals("4")) {
                 System.out.println("Quitting");
                 break;
             }
-
         }
     }
 
@@ -41,20 +40,19 @@ public class NotUntappd {
         String message = "";
 
         switch (operation) {
-            case "1" :
+            case "1":
                 message = "[1] Add a new beer entry";
                 break;
-            case "2" :
+            case "2":
                 message = "[2] Search beer list";
                 break;
-            case "3" :
+            case "3":
                 message = "[3] View all beers";
                 break;
-            case "4" :
+            case "4":
                 message = "[4] Quit";
                 break;
         }
-
         return message;
     }
 
@@ -72,7 +70,6 @@ public class NotUntappd {
         String comments = scanner.nextLine();
 
         addBeer(beerEntry, name, brewery, rating, comments);
-
     }
 
     private void addBeer(BeerEntry beerEntry, String name, String brewery, float rating, String comments) {
