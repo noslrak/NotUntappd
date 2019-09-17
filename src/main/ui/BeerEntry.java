@@ -6,6 +6,7 @@ public class BeerEntry {
     private float rating;
     private String comments;
 
+    // Constructor
     BeerEntry() {
         beerName = "";
         brewery = "";
@@ -13,6 +14,7 @@ public class BeerEntry {
         comments = "";
     }
 
+    // Setters
     void setBeerName(String beerName) {
         this.beerName = beerName;
     }
@@ -28,6 +30,25 @@ public class BeerEntry {
     void setComments(String comments) {
         this.comments = comments;
     }
+
+    // Getters
+    String getBeerName() {
+        return beerName;
+    }
+
+    String getBrewery() {
+        return brewery;
+    }
+
+    float getRating() {
+        return rating;
+    }
+
+    String getComments() {
+        return comments;
+    }
+
+
 
     public String toString() {
         return "Beer: " + beerName + " " + "Brewery: " + brewery + " " + "Rating: " + rating + " " + "Comments: "

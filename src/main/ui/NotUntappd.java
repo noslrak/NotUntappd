@@ -8,7 +8,7 @@ public class NotUntappd {
     private ArrayList<BeerEntry> beerList;
     private Scanner scanner;
 
-    private NotUntappd() {
+    NotUntappd() {
         beerList = new ArrayList<>();
         scanner = new Scanner(System.in);
         processOperations();
@@ -81,10 +81,88 @@ public class NotUntappd {
     }
 
     private void searchBeerList() {
+        String operation;
+
+        while (true) {
+            System.out.println("Please select an option: [1] Search by beer name [2] Search by brewery "
+                    + "[3] Search by rating [4] Return");
+            operation = scanner.nextLine();
+            System.out.println("You have selected: " + printOperationSearch(operation));
+            if (operation.equals("1")) {
+                searchBeerName();
+            } else if (operation.equals("2")) {
+                findBrewery();
+            } else if (operation.equals("3")) {
+                sortByRating();
+            } else if (operation.equals("4")) {
+                System.out.println("Returning");
+                break;
+            }
+        }
+    }
+
+    private String printOperationSearch(String operation) {
+        String message = "";
+        switch (operation) {
+            case "1":
+                message = "[1] Search by beer name";
+                break;
+            case "2":
+                message = "[2] Search by brewery";
+                break;
+            case "3":
+                message = "[3] Search by rating";
+                break;
+            case "4":
+                message = "[4] Return";
+                break;
+            default: // do nothing
+                break;
+        }
+        return message;
 
     }
 
-    public static void main(String[] args) {
-        new NotUntappd();
+    private void searchBeerName() {
+        BeerEntry search = new BeerEntry();
+
+        while (true) {
+            System.out.println("Please enter a beer name: ");
+            String name = scanner.nextLine();
+            for (BeerEntry beerEntry : beerList) {
+                if (beerEntry.getBeerName().equals(name)) {
+                    search = beerEntry;
+                    System.out.println("Beer: " + search.getBeerName() + " " + "Brewery: " + search.getBrewery() + " "
+                            + "Rating: " + search.getRating() + " " + "Comments: " + search.getComments());
+                    break;
+                }
+            }
+            if (search.getBeerName() == "") {
+                System.out.println("Beer not found");
+                break;
+            }
+        }
+    }
+
+    // attempts to produce a list of beers by a given brewery
+    private void findBrewery() {
+        ArrayList<BeerEntry> foundList = new ArrayList();
+
+        while (true) {
+            System.out.println("Please enter a brewery name");
+            String brewery = scanner.nextLine();
+            for (BeerEntry beerEntry : beerList) {
+                if (beerEntry.getBrewery().equals(brewery)) {
+                    foundList.add(beerEntry);
+                }
+            }
+            System.out.println("Beers from this brewery: " + foundList);
+            break;
+        }
+    }
+
+    // generates a new list of beers sorted by rating
+    private ArrayList sortByRating() {
+        return null;
     }
 }
