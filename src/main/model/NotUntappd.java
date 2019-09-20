@@ -1,6 +1,7 @@
-package ui;
+package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class NotUntappd {
@@ -8,7 +9,7 @@ public class NotUntappd {
     private ArrayList<BeerEntry> beerList;
     private Scanner scanner;
 
-    NotUntappd() {
+    public NotUntappd() {
         beerList = new ArrayList<>();
         scanner = new Scanner(System.in);
         processOperations();
@@ -27,7 +28,7 @@ public class NotUntappd {
             } else if (operation.equals("2")) {
                 searchBeerList();
             } else if (operation.equals("3")) {
-                System.out.println("Current beer list: " + beerList);
+                viewBeerList();
             } else if (operation.equals("4")) {
                 System.out.println("Quitting");
                 break;
@@ -58,8 +59,6 @@ public class NotUntappd {
     }
 
     private void newBeerEntry() {
-        BeerEntry beerEntry = new BeerEntry();
-
         System.out.println("Please enter a beer name: ");
         String name = scanner.nextLine();
         System.out.println("Please enter the name of the brewery: ");
@@ -69,15 +68,7 @@ public class NotUntappd {
         scanner.nextLine();
         System.out.println("Please enter any comments or leave blank: ");
         String comments = scanner.nextLine();
-        addBeer(beerEntry, name, brewery, rating, comments);
-    }
-
-    private void addBeer(BeerEntry beerEntry, String name, String brewery, float rating, String comments) {
-        beerEntry.setBeerName(name);
-        beerEntry.setBrewery(brewery);
-        beerEntry.setRating(rating);
-        beerEntry.setComments(comments);
-        beerList.add(beerEntry);
+        beerList.add(new BeerEntry(name, brewery, rating, comments));
     }
 
     private void searchBeerList() {
@@ -93,7 +84,7 @@ public class NotUntappd {
             } else if (operation.equals("2")) {
                 findBrewery();
             } else if (operation.equals("3")) {
-                sortByRating();
+                filterByRating();
             } else if (operation.equals("4")) {
                 System.out.println("Returning");
                 break;
@@ -120,26 +111,20 @@ public class NotUntappd {
                 break;
         }
         return message;
-
     }
 
     private void searchBeerName() {
-        BeerEntry search = new BeerEntry();
+        BeerEntry search;
 
-        while (true) {
-            System.out.println("Please enter a beer name: ");
-            String name = scanner.nextLine();
-            for (BeerEntry beerEntry : beerList) {
-                if (beerEntry.getBeerName().equals(name)) {
-                    search = beerEntry;
-                    System.out.println("Beer: " + search.getBeerName() + " " + "Brewery: " + search.getBrewery() + " "
-                            + "Rating: " + search.getRating() + " " + "Comments: " + search.getComments());
-                    break;
-                }
-            }
-            if (search.getBeerName() == "") {
+        System.out.println("Please enter a beer name: ");
+        String name = scanner.nextLine();
+        for (BeerEntry beerEntry : beerList) {
+            if (beerEntry.getBeerName().equals(name)) {
+                search = beerEntry;
+                System.out.println("Beer: " + search.getBeerName() + " " + "Brewery: " + search.getBrewery() + " "
+                        + "Rating: " + search.getRating() + " " + "Comments: " + search.getComments());
+            } else {
                 System.out.println("Beer not found");
-                break;
             }
         }
     }
@@ -148,21 +133,100 @@ public class NotUntappd {
     private void findBrewery() {
         ArrayList<BeerEntry> foundList = new ArrayList();
 
-        while (true) {
-            System.out.println("Please enter a brewery name");
-            String brewery = scanner.nextLine();
-            for (BeerEntry beerEntry : beerList) {
-                if (beerEntry.getBrewery().equals(brewery)) {
-                    foundList.add(beerEntry);
-                }
+        System.out.println("Please enter a brewery name: ");
+        String brewery = scanner.nextLine();
+        for (BeerEntry beerEntry : beerList) {
+            if (beerEntry.getBrewery().equals(brewery)) {
+                foundList.add(beerEntry);
             }
-            System.out.println("Beers from this brewery: " + foundList);
-            break;
         }
+        System.out.println("Beers from this brewery: ");
+        for (int i = 0; i < foundList.size(); i++) {
+            System.out.println(foundList.get(i));
+        }
+
     }
 
     // generates a new list of beers sorted by rating
-    private ArrayList sortByRating() {
-        return null;
+    private void filterByRating() {
+        ArrayList<BeerEntry> ratingList = new ArrayList();
+
+        System.out.println("Please enter a minimum rating: ");
+        float rating = scanner.nextFloat();
+        scanner.nextLine();
+        for (BeerEntry beerEntry : beerList) {
+            if (beerEntry.getRating() >= rating) {
+                ratingList.add(beerEntry);
+            }
+        }
+        System.out.println("Beers above " + rating + ": ");
+        for (int i = 0; i < ratingList.size(); i++) {
+            System.out.println(ratingList.get(i));
+        }
     }
+
+    private void viewBeerList() {
+        String operation;
+
+        while (true) {
+            System.out.println("Please select an option: [1] View by default [2] View by name "
+                    + "[3] View by rating [4] Return");
+            operation = scanner.nextLine();
+            System.out.println("You have selected: " + printOperationView(operation));
+            if (operation.equals("1")) {
+                noSort();
+            } else if (operation.equals("2")) {
+                sortByName();
+            } else if (operation.equals("3")) {
+                sortByRating();
+            } else if (operation.equals("4")) {
+                System.out.println("Returning");
+                break;
+            }
+        }
+    }
+
+    private String printOperationView(String operation) {
+        String message = "";
+
+        switch (operation) {
+            case "1":
+                message = "[1] View by default";
+                break;
+            case "2":
+                message = "[2] View by name";
+                break;
+            case "3":
+                message = "[4] View by rating";
+                break;
+            case "4":
+                message = "[5] Return";
+                break;
+            default: // do nothing
+                break;
+        }
+        return message;
+    }
+
+
+    private void noSort() {
+        System.out.println("Default view: ");
+        for (int i = 0; i < beerList.size(); i++) {
+            System.out.println(beerList.get(i));
+        }
+    }
+
+    private void sortByName() {
+        Collections.sort(beerList, new NameCompare());
+        System.out.println("Sorted by name: ");
+        for (int i = 0; i < beerList.size(); i++) {
+            System.out.println(beerList.get(i));
+        }
+    }
+
+    private void sortByRating() {
+
+    }
+
+
 }

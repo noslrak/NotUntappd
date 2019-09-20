@@ -1,4 +1,6 @@
-package ui;
+package model;
+
+import java.util.Comparator;
 
 public class BeerEntry {
     private String beerName;
@@ -7,28 +9,11 @@ public class BeerEntry {
     private String comments;
 
     // Constructor
-    BeerEntry() {
-        beerName = "";
-        brewery = "";
-        rating = 0;
-        comments = "";
-    }
-
-    // Setters
-    void setBeerName(String beerName) {
-        this.beerName = beerName;
-    }
-
-    void setBrewery(String brewery) {
-        this.brewery = brewery;
-    }
-
-    void setRating(float rating) {
-        this.rating = rating;
-    }
-
-    void setComments(String comments) {
-        this.comments = comments;
+    public BeerEntry(String name, String brew, float rate, String comm) {
+        this.beerName = name;
+        this.brewery = brew;
+        this.rating = rate;
+        this.comments = comm;
     }
 
     // Getters
@@ -48,10 +33,10 @@ public class BeerEntry {
         return comments;
     }
 
-
-
     public String toString() {
         return "Beer: " + beerName + " " + "Brewery: " + brewery + " " + "Rating: " + rating + " " + "Comments: "
                 + comments;
     }
 }
+
+
