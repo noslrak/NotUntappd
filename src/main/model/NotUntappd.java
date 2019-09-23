@@ -1,7 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class NotUntappd {
@@ -36,7 +36,7 @@ public class NotUntappd {
         }
     }
 
-    private String printOperation(String operation) {
+    public String printOperation(String operation) {
         String message = "";
 
         switch (operation) {
@@ -63,8 +63,8 @@ public class NotUntappd {
         String name = scanner.nextLine();
         System.out.println("Please enter the name of the brewery: ");
         String brewery = scanner.nextLine();
-        System.out.println("Please enter a rating for the beer: ");
-        float rating = scanner.nextFloat();
+        System.out.println("Please enter a rating [0.00 - 5.00] for this beer: ");
+        double rating = scanner.nextFloat();
         scanner.nextLine();
         System.out.println("Please enter any comments or leave blank: ");
         String comments = scanner.nextLine();
@@ -114,24 +114,24 @@ public class NotUntappd {
     }
 
     private void searchBeerName() {
-        BeerEntry search;
+        ArrayList<BeerEntry> nameList = new ArrayList<>();
 
         System.out.println("Please enter a beer name: ");
         String name = scanner.nextLine();
         for (BeerEntry beerEntry : beerList) {
             if (beerEntry.getBeerName().equals(name)) {
-                search = beerEntry;
-                System.out.println("Beer: " + search.getBeerName() + " " + "Brewery: " + search.getBrewery() + " "
-                        + "Rating: " + search.getRating() + " " + "Comments: " + search.getComments());
-            } else {
-                System.out.println("Beer not found");
+                nameList.add(beerEntry);
             }
+        }
+        nameList.sort(Comparator.comparing(BeerEntry::getBrewery));
+        for (BeerEntry beerEntry : nameList) {
+            System.out.println(beerEntry);
         }
     }
 
-    // attempts to produce a list of beers by a given brewery
+    // attempts to produce a list of beers in alphabetical order by a given brewery
     private void findBrewery() {
-        ArrayList<BeerEntry> foundList = new ArrayList();
+        ArrayList<BeerEntry> foundList = new ArrayList<>();
 
         System.out.println("Please enter a brewery name: ");
         String brewery = scanner.nextLine();
@@ -140,28 +140,30 @@ public class NotUntappd {
                 foundList.add(beerEntry);
             }
         }
+        foundList.sort(Comparator.comparing(BeerEntry::getBeerName));
         System.out.println("Beers from this brewery: ");
-        for (int i = 0; i < foundList.size(); i++) {
-            System.out.println(foundList.get(i));
+        for (BeerEntry beerEntry : foundList) {
+            System.out.println(beerEntry);
         }
 
     }
 
-    // generates a new list of beers sorted by rating
+    // generates a new list of beers sorted by rating, then name if rating is tied
     private void filterByRating() {
-        ArrayList<BeerEntry> ratingList = new ArrayList();
+        ArrayList<BeerEntry> ratingList = new ArrayList<>();
 
-        System.out.println("Please enter a minimum rating: ");
-        float rating = scanner.nextFloat();
+        System.out.println("Please enter a minimum rating [0.00 - 5.00]: ");
+        double rating = scanner.nextFloat();
         scanner.nextLine();
         for (BeerEntry beerEntry : beerList) {
-            if (beerEntry.getRating() >= rating) {
+            if (beerEntry.getBeerRating() >= rating) {
                 ratingList.add(beerEntry);
             }
         }
+        ratingList.sort(Comparator.comparing(BeerEntry::getBeerRating).reversed());
         System.out.println("Beers above " + rating + ": ");
-        for (int i = 0; i < ratingList.size(); i++) {
-            System.out.println(ratingList.get(i));
+        for (BeerEntry beerEntry : ratingList) {
+            System.out.println(beerEntry);
         }
     }
 
@@ -191,13 +193,13 @@ public class NotUntappd {
 
         switch (operation) {
             case "1":
-                message = "[1] View by default";
+                message = "[1] View default";
                 break;
             case "2":
-                message = "[2] View by name";
+                message = "[2] View sorted by name";
                 break;
             case "3":
-                message = "[4] View by rating";
+                message = "[4] View sorted by rating";
                 break;
             case "4":
                 message = "[5] Return";
@@ -208,25 +210,26 @@ public class NotUntappd {
         return message;
     }
 
-
     private void noSort() {
         System.out.println("Default view: ");
-        for (int i = 0; i < beerList.size(); i++) {
-            System.out.println(beerList.get(i));
+        for (BeerEntry beerEntry : beerList) {
+            System.out.println(beerEntry);
         }
     }
 
     private void sortByName() {
-        Collections.sort(beerList, new NameCompare());
+        beerList.sort(Comparator.comparing(BeerEntry::getBeerName));
         System.out.println("Sorted by name: ");
-        for (int i = 0; i < beerList.size(); i++) {
-            System.out.println(beerList.get(i));
+        for (BeerEntry beerEntry : beerList) {
+            System.out.println(beerEntry);
         }
     }
 
     private void sortByRating() {
-
+        beerList.sort(Comparator.comparing(BeerEntry::getBeerRating).reversed().thenComparing(BeerEntry::getBeerName));
+        System.out.println("Sorted by rating");
+        for (BeerEntry beerEntry : beerList) {
+            System.out.println(beerEntry);
+        }
     }
-
-
 }

@@ -1,41 +1,67 @@
 package model;
 
-import java.util.Comparator;
-
 public class BeerEntry {
     private String beerName;
-    private String brewery;
-    private float rating;
-    private String comments;
+    private String breweryName;
+    private double beerRating;
+    private String beerComments;
 
     // Constructor
-    public BeerEntry(String name, String brew, float rate, String comm) {
+    public BeerEntry(String name, String brew, double rate, String comm) {
         this.beerName = name;
-        this.brewery = brew;
-        this.rating = rate;
-        this.comments = comm;
+        this.breweryName = brew;
+        this.beerRating = rate;
+        this.beerComments = comm;
+    }
+
+    // Setters
+    // MODIFIES: this
+    // EFFECTS: changes beerName to inputted name
+    public void setBeerName(String name) {
+        this.beerName = name;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes breweryName to inputted brewery
+    void setBrewery(String brewery) {
+        this.breweryName = brewery;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes beerRating to inputted rating
+    void setBeerRating(double rate) {
+        this.beerRating = rate;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes comments to inputted comment
+    void setBeerComments(String comm) {
+        this.beerComments = comm;
     }
 
     // Getters
-    String getBeerName() {
+    // EFFECTS: returns the beer name
+    public String getBeerName() {
         return beerName;
     }
 
-    String getBrewery() {
-        return brewery;
+    // EFFECTS: returns the brewery name
+    public String getBrewery() {
+        return breweryName;
     }
 
-    float getRating() {
-        return rating;
+    // EFFECTS: returns the beer rating
+    public double getBeerRating() {
+        return beerRating;
     }
 
-    String getComments() {
-        return comments;
+    public String getBeerComments() {
+        return beerComments;
     }
 
     public String toString() {
-        return "Beer: " + beerName + " " + "Brewery: " + brewery + " " + "Rating: " + rating + " " + "Comments: "
-                + comments;
+        return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Rating: " + beerRating + " "
+                + "Comments: " + beerComments;
     }
 }
 
