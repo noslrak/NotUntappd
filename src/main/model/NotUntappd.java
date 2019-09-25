@@ -15,6 +15,7 @@ public class NotUntappd {
         processOperations();
     }
 
+    // EFFECTS: receives an operation choice and directs to operation
     private void processOperations() {
         String operation;
 
@@ -36,6 +37,7 @@ public class NotUntappd {
         }
     }
 
+    // EFFECTS: prints out operation choice from processOperations
     public String printOperation(String operation) {
         String message = "";
 
@@ -58,6 +60,7 @@ public class NotUntappd {
         return message;
     }
 
+    // EFFECTS: creates a new BeerEntry and adds new BeerEntry to beerList
     private void newBeerEntry() {
         BeerEntry beerEntry = new BeerEntry();
 
@@ -68,7 +71,7 @@ public class NotUntappd {
         String brewery = scanner.nextLine();
         beerEntry.setBrewery(brewery);
         System.out.println("Please enter a rating [0.00 - 5.00] for this beer: ");
-        double rating = scanner.nextFloat();
+        double rating = scanner.nextDouble();
         beerEntry.setBeerRating(rating);
         scanner.nextLine();
         System.out.println("Please enter any comments or leave blank: ");
@@ -77,6 +80,7 @@ public class NotUntappd {
         beerList.add(beerEntry);
     }
 
+    // EFFECTS: receives an operation choice and directs to operation
     private void searchBeerList() {
         String operation;
 
@@ -98,6 +102,7 @@ public class NotUntappd {
         }
     }
 
+    // EFFECTS: prints out operation choice from searchBeerList
     public String printOperationSearch(String operation) {
         String message = "";
         switch (operation) {
@@ -119,6 +124,8 @@ public class NotUntappd {
         return message;
     }
 
+    // EFFECTS: attempts to retrieve entry of given beer name(s), if multiple beers of same name retrieved sorted by
+    // brewery name
     private void searchBeerName() {
         ArrayList<BeerEntry> nameList = new ArrayList<>();
 
@@ -135,7 +142,8 @@ public class NotUntappd {
         }
     }
 
-    // attempts to produce a list of beers in alphabetical order by a given brewery
+    // REQUIRES: beerList is not empty
+    // EFFECTS: attempts to produce a list of beers in alphabetical order by a given brewery
     private void findBrewery() {
         ArrayList<BeerEntry> foundList = new ArrayList<>();
 
@@ -154,7 +162,8 @@ public class NotUntappd {
 
     }
 
-    // generates a new list of beers sorted by rating, then name if rating is tied
+    // REQUIRES: beerList is not empty
+    // EFFECTS: generates a new list of beers sorted by rating, then name if rating is tied
     private void filterByRating() {
         ArrayList<BeerEntry> ratingList = new ArrayList<>();
 
@@ -173,6 +182,7 @@ public class NotUntappd {
         }
     }
 
+    // EFFECTS: receives an operation choice and directs to operation
     private void viewBeerList() {
         String operation;
 
@@ -194,6 +204,7 @@ public class NotUntappd {
         }
     }
 
+    // EFFECTS: prints out the selected operation from viewBeerList
     public String printOperationView(String operation) {
         String message = "";
 
@@ -216,6 +227,8 @@ public class NotUntappd {
         return message;
     }
 
+    // REQUIRES: beerList is not empty
+    // EFFECTS: prints out beerList in default view
     private void noSort() {
         System.out.println("Default view: ");
         for (BeerEntry beerEntry : beerList) {
@@ -223,6 +236,8 @@ public class NotUntappd {
         }
     }
 
+    // REQUIRES: beerList is not empty
+    // EFFECTS: prints out beerList sorted by name
     private void sortByName() {
         beerList.sort(Comparator.comparing(BeerEntry::getBeerName));
         System.out.println("Sorted by name: ");
@@ -231,6 +246,8 @@ public class NotUntappd {
         }
     }
 
+    // REQUIRES: beerList is not empty
+    // EFFECTS: prints out beerList sorted by rating, then by name is ratings are equal
     private void sortByRating() {
         beerList.sort(Comparator.comparing(BeerEntry::getBeerRating).reversed().thenComparing(BeerEntry::getBeerName));
         System.out.println("Sorted by rating");
