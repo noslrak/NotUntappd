@@ -1,5 +1,7 @@
 package model;
 
+import java.text.DecimalFormat;
+
 public class BeerEntry {
     private String beerName;
     private String breweryName;
@@ -7,11 +9,7 @@ public class BeerEntry {
     private String beerComments;
 
     // Constructor
-    public BeerEntry(String name, String brew, double rate, String comm) {
-        this.beerName = name;
-        this.breweryName = brew;
-        this.beerRating = rate;
-        this.beerComments = comm;
+    public BeerEntry() {
     }
 
     // Setters
@@ -23,19 +21,19 @@ public class BeerEntry {
 
     // MODIFIES: this
     // EFFECTS: changes breweryName to inputted brewery
-    void setBrewery(String brewery) {
+    public void setBrewery(String brewery) {
         this.breweryName = brewery;
     }
 
     // MODIFIES: this
     // EFFECTS: changes beerRating to inputted rating
-    void setBeerRating(double rate) {
+    public void setBeerRating(double rate) {
         this.beerRating = rate;
     }
 
     // MODIFIES: this
     // EFFECTS: changes comments to inputted comment
-    void setBeerComments(String comm) {
+    public void setBeerComments(String comm) {
         this.beerComments = comm;
     }
 
@@ -55,13 +53,16 @@ public class BeerEntry {
         return beerRating;
     }
 
+    // EFFECTS: returns the beer comment
     public String getBeerComments() {
         return beerComments;
     }
 
+    DecimalFormat format = new DecimalFormat("##.00");
+
     public String toString() {
-        return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Rating: " + beerRating + " "
-                + "Comments: " + beerComments;
+        return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Rating: " + format.format(beerRating)
+                + " " + "Comments: " + beerComments;
     }
 }
 

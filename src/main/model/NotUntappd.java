@@ -59,16 +59,22 @@ public class NotUntappd {
     }
 
     private void newBeerEntry() {
+        BeerEntry beerEntry = new BeerEntry();
+
         System.out.println("Please enter a beer name: ");
         String name = scanner.nextLine();
+        beerEntry.setBeerName(name);
         System.out.println("Please enter the name of the brewery: ");
         String brewery = scanner.nextLine();
+        beerEntry.setBrewery(brewery);
         System.out.println("Please enter a rating [0.00 - 5.00] for this beer: ");
         double rating = scanner.nextFloat();
+        beerEntry.setBeerRating(rating);
         scanner.nextLine();
         System.out.println("Please enter any comments or leave blank: ");
         String comments = scanner.nextLine();
-        beerList.add(new BeerEntry(name, brewery, rating, comments));
+        beerEntry.setBeerComments(comments);
+        beerList.add(beerEntry);
     }
 
     private void searchBeerList() {
@@ -92,7 +98,7 @@ public class NotUntappd {
         }
     }
 
-    private String printOperationSearch(String operation) {
+    public String printOperationSearch(String operation) {
         String message = "";
         switch (operation) {
             case "1":
@@ -188,7 +194,7 @@ public class NotUntappd {
         }
     }
 
-    private String printOperationView(String operation) {
+    public String printOperationView(String operation) {
         String message = "";
 
         switch (operation) {
