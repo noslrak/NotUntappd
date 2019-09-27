@@ -18,13 +18,14 @@ public class NotUntappdTest {
         beerList = new ArrayList<>();
     }
 
-    @Test
+    /*@Test
     public void testPrintOperationSearch() {
         assertEquals("[1] Search by beer name", one.printOperationSearch());
     }
 
     @Test
     public void testPrintOperationView() {
+
         assertEquals("[2] View sorted by name", two.printOperationView());
-    }
+    }*/
 }

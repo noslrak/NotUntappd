@@ -37,6 +37,7 @@ public class NotUntappd {
         }
     }
 
+    // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out operation choice from processOperations
     public String printOperation(String operation) {
         String message = "";
@@ -102,6 +103,7 @@ public class NotUntappd {
         }
     }
 
+    // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out operation choice from searchBeerList
     public String printOperationSearch(String operation) {
         String message = "";
@@ -124,8 +126,7 @@ public class NotUntappd {
         return message;
     }
 
-    // EFFECTS: attempts to retrieve entry of given beer name(s), if multiple beers of same name retrieved sorted by
-    // brewery name
+    // EFFECTS: retrieve entry of given beer name(s), if multiple beers of same name retrieved sort by brewery name
     private void searchBeerName() {
         ArrayList<BeerEntry> nameList = new ArrayList<>();
 
@@ -143,7 +144,7 @@ public class NotUntappd {
     }
 
     // REQUIRES: beerList is not empty
-    // EFFECTS: attempts to produce a list of beers in alphabetical order by a given brewery
+    // EFFECTS: produce a list of beers in alphabetical order by a given brewery
     private void findBrewery() {
         ArrayList<BeerEntry> foundList = new ArrayList<>();
 
@@ -163,12 +164,12 @@ public class NotUntappd {
     }
 
     // REQUIRES: beerList is not empty
-    // EFFECTS: generates a new list of beers sorted by rating, then name if rating is tied
+    // EFFECTS: generates a new list of beers sorted by rating, then by name if rating is tied
     private void filterByRating() {
         ArrayList<BeerEntry> ratingList = new ArrayList<>();
 
         System.out.println("Please enter a minimum rating [0.00 - 5.00]: ");
-        double rating = scanner.nextFloat();
+        double rating = scanner.nextDouble();
         scanner.nextLine();
         for (BeerEntry beerEntry : beerList) {
             if (beerEntry.getBeerRating() >= rating) {
@@ -204,6 +205,7 @@ public class NotUntappd {
         }
     }
 
+    // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out the selected operation from viewBeerList
     public String printOperationView(String operation) {
         String message = "";
