@@ -1,18 +1,47 @@
 package model;
 
+import ui.Loadable;
+import ui.Savable;
+
+import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
 
-public class NotUntappd {
+public class NotUntappd implements Loadable, Savable {
     // Initial functionality taken from B04 LoggingCalculator
     private ArrayList<BeerEntry> beerList;
     private Scanner scanner;
 
     public NotUntappd() {
-        beerList = new ArrayList<>();
         scanner = new Scanner(System.in);
+        String operation;
+
+        System.out.println("Please select an option: [1] Start new NotUntappd [2] Load previous NotUntappd");
+        operation = scanner.nextLine();
+        if (startNew(operation)) {
+            beerList = new ArrayList<>();
+        } else {
+            beerList = load();
+        }
         processOperations();
+    }
+
+    private boolean startNew(String operation) {
+        boolean b = true;
+
+        switch (operation) {
+            case "1":
+                b = true;
+                break;
+            case "2":
+                b = false;
+                break;
+            default: // do nothing
+                break;
+        }
+        return b;
     }
 
     // EFFECTS: receives an operation choice and directs to operation
@@ -32,6 +61,7 @@ public class NotUntappd {
                 viewBeerList();
             } else if (operation.equals("4")) {
                 System.out.println("Quitting");
+                save(beerList);
                 break;
             }
         }
@@ -39,7 +69,7 @@ public class NotUntappd {
 
     // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out operation choice from processOperations
-    public String printOperation(String operation) {
+    public static String printOperation(String operation) {
         String message = "";
 
         switch (operation) {
@@ -63,22 +93,16 @@ public class NotUntappd {
 
     // EFFECTS: creates a new BeerEntry and adds new BeerEntry to beerList
     private void newBeerEntry() {
-        BeerEntry beerEntry = new BeerEntry();
-
         System.out.println("Please enter a beer name: ");
         String name = scanner.nextLine();
-        beerEntry.setBeerName(name);
         System.out.println("Please enter the name of the brewery: ");
         String brewery = scanner.nextLine();
-        beerEntry.setBrewery(brewery);
         System.out.println("Please enter a rating [0.00 - 5.00] for this beer: ");
         double rating = scanner.nextDouble();
-        beerEntry.setBeerRating(rating);
         scanner.nextLine();
         System.out.println("Please enter any comments or leave blank: ");
         String comments = scanner.nextLine();
-        beerEntry.setBeerComments(comments);
-        beerList.add(beerEntry);
+        beerList.add(new BeerEntry(name, brewery, rating, comments));
     }
 
     // EFFECTS: receives an operation choice and directs to operation
@@ -105,7 +129,7 @@ public class NotUntappd {
 
     // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out operation choice from searchBeerList
-    public String printOperationSearch(String operation) {
+    public static String printOperationSearch(String operation) {
         String message = "";
         switch (operation) {
             case "1":
@@ -126,63 +150,79 @@ public class NotUntappd {
         return message;
     }
 
-    // EFFECTS: retrieve entry of given beer name(s), if multiple beers of same name retrieved sort by brewery name
+    // EFFECTS: retrieve entry of beer name(s), if multiple beers of same name retrieved sort by brewery name
     private void searchBeerName() {
-        ArrayList<BeerEntry> nameList = new ArrayList<>();
+        ArrayList<BeerEntry> nameList;
 
         System.out.println("Please enter a beer name: ");
         String name = scanner.nextLine();
-        for (BeerEntry beerEntry : beerList) {
-            if (beerEntry.getBeerName().equals(name)) {
-                nameList.add(beerEntry);
-            }
-        }
-        nameList.sort(Comparator.comparing(BeerEntry::getBrewery));
-        for (BeerEntry beerEntry : nameList) {
-            System.out.println(beerEntry);
-        }
+        nameList = findBeerName(name);
+        printList(nameList);
     }
 
-    // REQUIRES: beerList is not empty
-    // EFFECTS: produce a list of beers in alphabetical order by a given brewery
-    private void findBrewery() {
+    // EFFECTS: attempts to find name of given beer in beerList
+    private ArrayList<BeerEntry> findBeerName(String name) {
         ArrayList<BeerEntry> foundList = new ArrayList<>();
+
+        for (BeerEntry beerEntry : beerList) {
+            if (beerEntry.getBeerName().equals(name)) {
+                foundList.add(beerEntry);
+            }
+        }
+        foundList.sort(Comparator.comparing(BeerEntry::getBrewery));
+        return foundList;
+    }
+
+    // EFFECTS: allows searching for a brewery name and produces a list of beers from the brewery
+    private void findBrewery() {
+        ArrayList<BeerEntry> foundList;
 
         System.out.println("Please enter a brewery name: ");
         String brewery = scanner.nextLine();
+        foundList = searchBrewery(brewery);
+        System.out.println("Beers from this brewery: ");
+        printList(foundList);
+    }
+
+    // EFFECTS: takes in a name of a brewery and filters out beers from the brewery
+    private ArrayList<BeerEntry> searchBrewery(String brewery) {
+        ArrayList<BeerEntry> foundList = new ArrayList<>();
+
         for (BeerEntry beerEntry : beerList) {
             if (beerEntry.getBrewery().equals(brewery)) {
                 foundList.add(beerEntry);
             }
         }
         foundList.sort(Comparator.comparing(BeerEntry::getBeerName));
-        System.out.println("Beers from this brewery: ");
-        for (BeerEntry beerEntry : foundList) {
-            System.out.println(beerEntry);
-        }
-
+        return foundList;
     }
 
     // REQUIRES: beerList is not empty
     // EFFECTS: generates a new list of beers sorted by rating, then by name if rating is tied
     private void filterByRating() {
-        ArrayList<BeerEntry> ratingList = new ArrayList<>();
+        ArrayList<BeerEntry> ratingList;
 
         System.out.println("Please enter a minimum rating [0.00 - 5.00]: ");
         double rating = scanner.nextDouble();
         scanner.nextLine();
+        ratingList = searchRating(rating);
+        System.out.println("Beers above " + rating + ": ");
+        printList(ratingList);
+    }
+
+    private ArrayList<BeerEntry> searchRating(double rating) {
+        ArrayList<BeerEntry> ratingList = new ArrayList<>();
+
         for (BeerEntry beerEntry : beerList) {
             if (beerEntry.getBeerRating() >= rating) {
                 ratingList.add(beerEntry);
             }
         }
-        ratingList.sort(Comparator.comparing(BeerEntry::getBeerRating).reversed());
-        System.out.println("Beers above " + rating + ": ");
-        for (BeerEntry beerEntry : ratingList) {
-            System.out.println(beerEntry);
-        }
+        ratingList.sort(Comparator.comparing(BeerEntry::getBeerName));
+        return ratingList;
     }
 
+    // REQUIRES: a non-empty BeerList
     // EFFECTS: receives an operation choice and directs to operation
     private void viewBeerList() {
         String operation;
@@ -207,7 +247,7 @@ public class NotUntappd {
 
     // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out the selected operation from viewBeerList
-    public String printOperationView(String operation) {
+    public static String printOperationView(String operation) {
         String message = "";
 
         switch (operation) {
@@ -232,29 +272,71 @@ public class NotUntappd {
     // REQUIRES: beerList is not empty
     // EFFECTS: prints out beerList in default view
     private void noSort() {
-        System.out.println("Default view: ");
-        for (BeerEntry beerEntry : beerList) {
-            System.out.println(beerEntry);
+        if (beerList.isEmpty()) {
+            System.out.println("No beers entered");
+        } else {
+            System.out.println("Default view: ");
+            printList(beerList);
         }
     }
 
     // REQUIRES: beerList is not empty
     // EFFECTS: prints out beerList sorted by name
     private void sortByName() {
-        beerList.sort(Comparator.comparing(BeerEntry::getBeerName));
-        System.out.println("Sorted by name: ");
-        for (BeerEntry beerEntry : beerList) {
-            System.out.println(beerEntry);
+        if (beerList.isEmpty()) {
+            System.out.println("No beers entered");
+        } else {
+            beerList.sort(Comparator.comparing(BeerEntry::getBeerName));
+            System.out.println("Sorted by name: ");
+            printList(beerList);
         }
     }
 
     // REQUIRES: beerList is not empty
     // EFFECTS: prints out beerList sorted by rating, then by name is ratings are equal
     private void sortByRating() {
-        beerList.sort(Comparator.comparing(BeerEntry::getBeerRating).reversed().thenComparing(BeerEntry::getBeerName));
-        System.out.println("Sorted by rating");
-        for (BeerEntry beerEntry : beerList) {
+        if (beerList.isEmpty()) {
+            System.out.println("No beers entered");
+        } else {
+            beerList.sort(Comparator.comparing(BeerEntry::getBeerRating).reversed()
+                    .thenComparing(BeerEntry::getBeerName));
+            System.out.println("Sorted by rating");
+            printList(beerList);
+        }
+    }
+
+    // EFFECTS: prints out a given list of beerEntry
+    public static void printList(ArrayList<BeerEntry> list) {
+        for (BeerEntry beerEntry : list) {
             System.out.println(beerEntry);
         }
+    }
+
+    // Load and save adapted from: https://stackoverflow.com/questions/16145682/deserialize-multiple-java-objects and
+    //                             https://www.mkyong.com/java/how-to-read-and-write-java-object-to-a-file/
+    @Override
+    public void save(ArrayList<BeerEntry> beerList) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(new File("myObjects.txt"));
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(beerList);
+            out.close();
+            fileOut.close();
+        } catch (IOException ex) {
+            System.out.println("File unable to be saved");
+        }
+    }
+
+    @Override
+    public ArrayList<BeerEntry> load() {
+        ArrayList<BeerEntry> beerList = null;
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("myObjects.txt"));
+            beerList = (ArrayList<BeerEntry>) in.readObject();
+            in.close();
+        } catch (Exception e) {
+            System.out.println("File not found");
+        }
+        return beerList;
     }
 }

@@ -1,15 +1,21 @@
 package model;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
-public class BeerEntry {
+public class BeerEntry implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String beerName;
     private String breweryName;
     private double beerRating;
     private String beerComments;
 
     // Constructor
-    public BeerEntry() {
+    public BeerEntry(String name, String brewery, double rating, String comments) {
+        this.beerName = name;
+        this.breweryName = brewery;
+        this.beerRating = rating;
+        this.beerComments = comments;
     }
 
     // Setters
@@ -58,7 +64,7 @@ public class BeerEntry {
         return beerComments;
     }
 
-    DecimalFormat format = new DecimalFormat("##.00");
+    private DecimalFormat format = new DecimalFormat("##.00");
 
     public String toString() {
         return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Rating: " + format.format(beerRating)

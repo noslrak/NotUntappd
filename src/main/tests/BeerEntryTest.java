@@ -6,34 +6,37 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BeerEntryTest {
-    BeerEntry operis = new BeerEntry();
+class BeerEntryTest {
+    private BeerEntry operis = new BeerEntry("Operis", "Four Winds", 4.2, "");
+    private BeerEntry blank = new BeerEntry("", "", 0, "");
 
     @BeforeEach
-    public void runBefore() {
-        operis.setBeerName("Operis");
-        operis.setBrewery("Four Winds");
-        operis.setBeerRating(4.2);
-        operis.setBeerComments("");
+    void runBefore() {
     }
 
     @Test
-    public void testGetBeerName() {
+    void testSetBeerName() {
+        blank.setBeerName("Noa");
+        assertEquals("Noa", blank.getBeerName());
+    }
+
+    @Test
+    void testGetBeerName() {
         assertEquals("Operis", operis.getBeerName());
     }
 
     @Test
-    public void testGetBreweryName() {
+    void testGetBreweryName() {
         assertEquals("Four Winds", operis.getBrewery());
     }
 
     @Test
-    public void testGetRating() {
+    void testGetRating() {
         assertEquals(4.2, operis.getBeerRating());
     }
 
     @Test
-    public void testGetComments() {
+    void testGetComments() {
         assertEquals("", operis.getBeerComments());
     }
 }

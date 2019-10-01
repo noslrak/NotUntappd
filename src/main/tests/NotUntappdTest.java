@@ -1,31 +1,54 @@
 package tests;
 
 import model.BeerEntry;
-import model.NotUntappd;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static model.NotUntappd.*;
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import java.util.ArrayList;
 
-public class NotUntappdTest {
-    public ArrayList<BeerEntry> beerList;
-    String one = "1";
-    String two = "2";
+class NotUntappdTest {
+    private ArrayList<BeerEntry> beerList;
+    private BeerEntry operis = new BeerEntry("Operis", "Four Winds", 4.2, "");
+    private BeerEntry noa = new BeerEntry("Noa", "Omnipollo", 4.4, "Test");
 
     @BeforeEach
-    public void runBefore() {
+    void runBefore() {
         beerList = new ArrayList<>();
-    }
-
-    /*@Test
-    public void testPrintOperationSearch() {
-        assertEquals("[1] Search by beer name", one.printOperationSearch());
+        beerList.add(operis);
+        beerList.add(noa);
     }
 
     @Test
-    public void testPrintOperationView() {
+    void testPrintOperation() {
+        assertEquals("[4] Quit", printOperation("4"));
+    }
 
-        assertEquals("[2] View sorted by name", two.printOperationView());
-    }*/
+    @Test
+    void testPrintOperationSearch() {
+        assertEquals("[1] Search by beer name", printOperationSearch("1"));
+    }
+
+    @Test
+    void testPrintOperationView() {
+        assertEquals("[2] View sorted by name", printOperationView("2"));
+    }
+
+    @Test
+    void testPrintList() {
+        OutputStream os = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(os);
+        System.setOut(ps);
+
+        printList(beerList);
+        assertEquals("Beer: Operis Brewery: Four Winds Rating: 4.20 Comments: \nBeer: Noa Brewery: "
+                + "Omnipollo Rating: 4.40 Comments: Test", os.toString().trim());
+        PrintStream originalOut = System.out;
+        System.setOut(originalOut);
+    }
 }
