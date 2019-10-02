@@ -21,6 +21,24 @@ class BeerEntryTest {
     }
 
     @Test
+    void testSetBrewery() {
+        blank.setBrewery("Cantillion");
+        assertEquals("Cantillion", blank.getBrewery());
+    }
+
+    @Test
+    void testSetBeerRating() {
+        blank.setBeerRating(4.6);
+        assertEquals(4.6, blank.getBeerRating());
+    }
+
+    @Test
+    void testSetBeerComments() {
+        blank.setBeerComments("Test comment please ignore");
+        assertEquals("Test comment please ignore", blank.getBeerComments());
+    }
+
+    @Test
     void testGetBeerName() {
         assertEquals("Operis", operis.getBeerName());
     }
