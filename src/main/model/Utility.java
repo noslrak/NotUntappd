@@ -74,10 +74,10 @@ public final class Utility {
                 message = "[2] View sorted by name";
                 break;
             case "3":
-                message = "[4] View sorted by rating";
+                message = "[3] View sorted by rating";
                 break;
             case "4":
-                message = "[5] Return";
+                message = "[4] Return";
                 break;
             default: // do nothing
                 break;
