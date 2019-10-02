@@ -20,6 +20,7 @@ public class NotUntappd implements Loadable, Savable {
         System.out.println("Please select an option: [1] Load previous NotUntappd or any other Integer to start new "
                 + "NotUntappd");
         operation = scanner.nextInt();
+        scanner.nextLine();
         if (loadPrevious(operation)) {
             beerList = load();
         } else {

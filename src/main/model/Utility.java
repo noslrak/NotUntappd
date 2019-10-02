@@ -92,6 +92,8 @@ public final class Utility {
         }
     }
 
+    // REQUIRES: beerList is not empty
+    // MODIFIES: this
     // EFFECTS: attempts to find name of given beer in beerList
     public static ArrayList<BeerEntry> findBeerName(String name, ArrayList<BeerEntry> beerList) {
         ArrayList<BeerEntry> foundList = new ArrayList<>();
@@ -105,7 +107,9 @@ public final class Utility {
         return foundList;
     }
 
-    // EFFECTS: takes in a name of a brewery and filters out beers from the brewery
+    // REQUIRES: beerList is not empty
+    // MODIFIES: this
+    // EFFECTS: takes in a name of a brewery and a beerList, filters out beers from the brewery
     public static ArrayList<BeerEntry> searchBrewery(String brewery, ArrayList<BeerEntry> beerList) {
         ArrayList<BeerEntry> foundList = new ArrayList<>();
 
@@ -118,6 +122,9 @@ public final class Utility {
         return foundList;
     }
 
+    // REQUIRES: beerList is not empty
+    // MODIFIES: this
+    // EFFECTS: takes in a rating x and a beerList and produces a new list of beers with rating >= x
     public static ArrayList<BeerEntry> searchRating(double rating, ArrayList<BeerEntry> beerList) {
         ArrayList<BeerEntry> ratingList = new ArrayList<>();
 
