@@ -13,16 +13,19 @@ public class NotUntappd implements Loadable, Savable {
     private ArrayList<BeerEntry> beerList;
     private Scanner scanner;
 
-    NotUntappd() {
+    public NotUntappd() {
         scanner = new Scanner(System.in);
         int operation;
+        String fileName;
 
         System.out.println("Please select an option: [1] Load previous NotUntappd or any other Integer to start new "
                 + "NotUntappd");
         operation = scanner.nextInt();
         scanner.nextLine();
         if (loadPrevious(operation)) {
-            beerList = load();
+            System.out.println("Please enter the name of previous NotUntappd");
+            fileName = scanner.nextLine();
+            beerList = loadFile(fileName);
         } else {
             beerList = new ArrayList<>();
         }
@@ -31,27 +34,59 @@ public class NotUntappd implements Loadable, Savable {
 
     // EFFECTS: receives an operation choice and directs to operation
     private void processOperations() {
-        String operation;
+        int operation;
 
         while (true) {
             System.out.println("Please select an option: [1] Add a new beer entry [2] Search beer list "
                     + "[3] View all beers [4] Quit");
-            operation = scanner.nextLine();
+            operation = scanner.nextInt();
+            scanner.nextLine();
             System.out.println("You have selected: " + printOperation(operation));
-            if (operation.equals("1")) {
-                newBeerEntry();
-            } else if (operation.equals("2")) {
-                searchBeerList();
-            } else if (operation.equals("3")) {
-                viewBeerList();
-            } else if (operation.equals("4")) {
+            if (operation == 4) {
+                toSave();
                 System.out.println("Quitting");
-                save(beerList);
                 break;
+            } else {
+                findProcessOperation(operation);
             }
         }
     }
 
+    private void findProcessOperation(int operation) {
+        switch (operation) {
+            case 1:
+                newBeerEntry();
+                break;
+            case 2:
+                searchBeerList();
+                break;
+            case 3:
+                viewBeerList();
+                break;
+            default: // do nothing
+                break;
+        }
+    }
+
+    private void toSave() {
+        int operation;
+
+        System.out.println("Would you like to save? [1] Yes [2] No");
+        operation = scanner.nextInt();
+        scanner.nextLine();
+        if (operation == 1) {
+            enterFileName();
+        }
+    }
+
+    private void enterFileName() {
+        String fileName;
+
+        System.out.println("Please enter a file name");
+        fileName = scanner.nextLine();
+        save(beerList, fileName);
+        System.out.println("File saved as: " + fileName);
+    }
     // EFFECTS: creates a new BeerEntry and adds new BeerEntry to beerList
     private void newBeerEntry() {
         System.out.println("Please enter a beer name: ");
@@ -148,9 +183,9 @@ public class NotUntappd implements Loadable, Savable {
     // Load and save adapted from: https://stackoverflow.com/questions/16145682/deserialize-multiple-java-objects and
     //                             https://www.mkyong.com/java/how-to-read-and-write-java-object-to-a-file/
     @Override
-    public void save(ArrayList<BeerEntry> beerList) {
+    public void save(ArrayList<BeerEntry> beerList, String name) {
         try {
-            FileOutputStream fileOut = new FileOutputStream(new File("myObjects.txt"));
+            FileOutputStream fileOut = new FileOutputStream(new File(name + ".txt"));
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(beerList);
             out.close();
@@ -161,10 +196,10 @@ public class NotUntappd implements Loadable, Savable {
     }
 
     @Override
-    public ArrayList<BeerEntry> load() {
+    public ArrayList<BeerEntry> loadFile(String name) {
         ArrayList<BeerEntry> beerList = null;
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("myObjects.txt"));
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name + ".txt"));
             beerList = (ArrayList<BeerEntry>) in.readObject();
             in.close();
         } catch (Exception e) {

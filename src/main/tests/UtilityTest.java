@@ -1,22 +1,22 @@
 package tests;
 
 import model.BeerEntry;
+import ui.NotUntappd;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
 import static model.Utility.*;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+
+import java.io.*;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 class UtilityTest {
     private ArrayList<BeerEntry> beerList;
-    private ArrayList<BeerEntry> foundList;
+    private ArrayList<BeerEntry> testList;
     private BeerEntry operis = new BeerEntry("Operis", "Four Winds", 4.2, "");
     private BeerEntry noa = new BeerEntry("Noa", "Omnipollo", 4.4, "Test");
     private BeerEntry magic = new BeerEntry("Magic Lambic", "Cantillion", 4.75, "");
@@ -27,7 +27,7 @@ class UtilityTest {
         beerList.add(operis);
         beerList.add(noa);
         beerList.add(magic);
-        foundList = new ArrayList<>();
+        testList = new ArrayList<>();
     }
 
     //  noSort, sortByName, sortByRating
@@ -46,37 +46,37 @@ class UtilityTest {
     void testFindBeerName() {
         BeerEntry test = new BeerEntry("Operis", "Test", 0, "");
         beerList.add(test);
-        foundList.add(operis);
-        foundList.add(test);
+        testList.add(operis);
+        testList.add(test);
 
         assertEquals(emptyList(), findBeerName("Pliny the Elder", beerList));
-        assertEquals(foundList, findBeerName("Operis", beerList));
+        assertEquals(testList, findBeerName("Operis", beerList));
     }
 
     @Test
     void testSearchBrewery() {
-        foundList.add(magic);
+        testList.add(magic);
 
         assertEquals(emptyList(), searchBrewery("Russian River Brewing", beerList));
-        assertEquals(foundList, searchBrewery("Cantillion", beerList));
+        assertEquals(testList, searchBrewery("Cantillion", beerList));
     }
 
     @Test
     void testSearchRating() {
-        foundList.add(magic);
-        foundList.add(noa);
+        testList.add(magic);
+        testList.add(noa);
 
-        assertEquals(foundList, searchRating(4.3, beerList));
+        assertEquals(testList, searchRating(4.3, beerList));
         assertEquals(emptyList(), searchRating(4.8, beerList));
     }
 
     @Test
     void testPrintOperation() {
-        assertEquals("[1] Add a new beer entry", printOperation("1"));
-        assertEquals("[2] Search beer list", printOperation("2"));
-        assertEquals("[3] View all beers", printOperation("3"));
-        assertEquals("[4] Quit", printOperation("4"));
-        assertEquals("", printOperation("7"));
+        assertEquals("[1] Add a new beer entry", printOperation(1));
+        assertEquals("[2] Search beer list", printOperation(2));
+        assertEquals("[3] View all beers", printOperation(3));
+        assertEquals("[4] Quit", printOperation(4));
+        assertEquals("", printOperation(7));
     }
 
     @Test

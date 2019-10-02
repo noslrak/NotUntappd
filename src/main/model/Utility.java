@@ -1,9 +1,13 @@
 package model;
 
+import ui.Loadable;
+import ui.Savable;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public final class Utility {
+public final class Utility implements Loadable {
 
     public static boolean loadPrevious(int operation) {
         boolean b = true;
@@ -16,20 +20,20 @@ public final class Utility {
 
     // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out operation choice from processOperations
-    public static String printOperation(String operation) {
+    public static String printOperation(int operation) {
         String message = "";
 
         switch (operation) {
-            case "1":
+            case 1:
                 message = "[1] Add a new beer entry";
                 break;
-            case "2":
+            case 2:
                 message = "[2] Search beer list";
                 break;
-            case "3":
+            case 3:
                 message = "[3] View all beers";
                 break;
-            case "4":
+            case 4:
                 message = "[4] Quit";
                 break;
             default: // do nothing
@@ -171,5 +175,18 @@ public final class Utility {
             System.out.println("Sorted by rating");
             printList(beerList);
         }
+    }
+
+    @Override
+    public ArrayList<BeerEntry> loadFile(String name) {
+        ArrayList<BeerEntry> beerList = null;
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name + ".txt"));
+            beerList = (ArrayList<BeerEntry>) in.readObject();
+            in.close();
+        } catch (Exception e) {
+            System.out.println("File not found");
+        }
+        return beerList;
     }
 }
