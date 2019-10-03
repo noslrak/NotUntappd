@@ -1,6 +1,8 @@
 package ui;
 
 import model.BeerEntry;
+import model.Utility;
+
 import static model.Utility.*;
 
 
@@ -8,12 +10,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class NotUntappd implements Loadable, Savable {
+public class NotUntappd {
     // Initial functionality taken from B04 LoggingCalculator
     private ArrayList<BeerEntry> beerList;
     private Scanner scanner;
+    private Utility utility = new Utility();
 
-    public NotUntappd() {
+    NotUntappd() {
         scanner = new Scanner(System.in);
         int operation;
         String fileName;
@@ -25,7 +28,7 @@ public class NotUntappd implements Loadable, Savable {
         if (loadPrevious(operation)) {
             System.out.println("Please enter the name of previous NotUntappd");
             fileName = scanner.nextLine();
-            beerList = loadFile(fileName);
+            beerList = utility.loadFile(fileName);
         } else {
             beerList = new ArrayList<>();
         }
@@ -84,9 +87,10 @@ public class NotUntappd implements Loadable, Savable {
 
         System.out.println("Please enter a file name");
         fileName = scanner.nextLine();
-        save(beerList, fileName);
+        utility.saveFile(beerList, fileName);
         System.out.println("File saved as: " + fileName);
     }
+
     // EFFECTS: creates a new BeerEntry and adds new BeerEntry to beerList
     private void newBeerEntry() {
         System.out.println("Please enter a beer name: ");
@@ -178,33 +182,5 @@ public class NotUntappd implements Loadable, Savable {
                 break;
             }
         }
-    }
-
-    // Load and save adapted from: https://stackoverflow.com/questions/16145682/deserialize-multiple-java-objects and
-    //                             https://www.mkyong.com/java/how-to-read-and-write-java-object-to-a-file/
-    @Override
-    public void save(ArrayList<BeerEntry> beerList, String name) {
-        try {
-            FileOutputStream fileOut = new FileOutputStream(new File(name + ".txt"));
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(beerList);
-            out.close();
-            fileOut.close();
-        } catch (IOException ex) {
-            System.out.println("File unable to be saved");
-        }
-    }
-
-    @Override
-    public ArrayList<BeerEntry> loadFile(String name) {
-        ArrayList<BeerEntry> beerList = null;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name + ".txt"));
-            beerList = (ArrayList<BeerEntry>) in.readObject();
-            in.close();
-        } catch (Exception e) {
-            System.out.println("File not found");
-        }
-        return beerList;
     }
 }

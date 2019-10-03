@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public final class Utility implements Loadable {
+public final class Utility implements Loadable, Savable {
 
     public static boolean loadPrevious(int operation) {
         boolean b = true;
@@ -174,6 +174,21 @@ public final class Utility implements Loadable {
                     .thenComparing(BeerEntry::getBeerName));
             System.out.println("Sorted by rating");
             printList(beerList);
+        }
+    }
+
+    // Load and save adapted from: https://stackoverflow.com/questions/16145682/deserialize-multiple-java-objects and
+    //                             https://www.mkyong.com/java/how-to-read-and-write-java-object-to-a-file/
+    @Override
+    public void saveFile(ArrayList<BeerEntry> beerList, String name) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(new File(name + ".txt"));
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(beerList);
+            out.close();
+            fileOut.close();
+        } catch (IOException ex) {
+            System.out.println("File unable to be saved");
         }
     }
 

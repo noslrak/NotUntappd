@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-public class TestLoadable {
+class LoadableTest {
     private Utility utility = new Utility();
     private ArrayList<BeerEntry> beerList;
     private ArrayList<BeerEntry> testList;
@@ -32,13 +32,21 @@ public class TestLoadable {
 
     @Test
     void testLoad() throws IOException {
-        FileOutputStream fileOut = new FileOutputStream(new File("test.txt"));
+        FileOutputStream fileOut = new FileOutputStream(new File("testLoad.txt"));
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(beerList);
         out.close();
         fileOut.close();
 
-        testList = utility.loadFile("test");
-        assertThat(testList, is(beerList));
+        testList = utility.loadFile("testLoad");
+        assertEquals(beerList, testList);
+    }
+
+    @Test
+    void testLoadAgain() throws IOException {
+        utility.saveFile(beerList, "testAgain");
+        testList = utility.loadFile("testAgain");
+
+        assertEquals(beerList, testList);
     }
 }
