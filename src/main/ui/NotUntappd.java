@@ -3,14 +3,12 @@ package ui;
 import model.BeerEntry;
 import model.Utility;
 
-import static model.Utility.*;
-
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class NotUntappd {
+import static model.Utility.*;
+
+class NotUntappd {
     // Initial functionality taken from B04 LoggingCalculator
     private ArrayList<BeerEntry> beerList;
     private Scanner scanner;
@@ -28,8 +26,10 @@ public class NotUntappd {
         if (loadPrevious(operation)) {
             System.out.println("Please enter the name of previous NotUntappd");
             fileName = scanner.nextLine();
+            System.out.println("Loading " + fileName);
             beerList = utility.loadFile(fileName);
         } else {
+            System.out.println("Starting new instance of NotUntappd");
             beerList = new ArrayList<>();
         }
         processOperations();
@@ -55,6 +55,8 @@ public class NotUntappd {
         }
     }
 
+    // REQUIRES: operation to be an int [1,3]
+    // EFFECTS: directs operation to proper operation choice
     private void findProcessOperation(int operation) {
         switch (operation) {
             case 1:
@@ -107,23 +109,37 @@ public class NotUntappd {
 
     // EFFECTS: receives an operation choice and directs to operation
     private void searchBeerList() {
-        String operation;
+        int operation;
 
         while (true) {
             System.out.println("Please select an option: [1] Search by beer name [2] Search by brewery "
                     + "[3] Search by rating [4] Return");
-            operation = scanner.nextLine();
+            operation = scanner.nextInt();
             System.out.println("You have selected: " + printOperationSearch(operation));
-            if (operation.equals("1")) {
-                searchBeerName();
-            } else if (operation.equals("2")) {
-                findBrewery();
-            } else if (operation.equals("3")) {
-                filterByRating();
-            } else if (operation.equals("4")) {
+            if (operation == 4) {
                 System.out.println("Returning");
                 break;
+            } else {
+                findSearchOperation(operation);
             }
+        }
+    }
+
+    // REQUIRES: operation to be an int [1,3]
+    // EFFECTS: directs operation to proper operation choice
+    private void findSearchOperation(int operation) {
+        switch (operation) {
+            case 1:
+                searchBeerName();
+                break;
+            case 2:
+                findBrewery();
+                break;
+            case 3:
+                filterByRating();
+                break;
+            default: // do nothing
+                break;
         }
     }
 
@@ -164,23 +180,38 @@ public class NotUntappd {
     // REQUIRES: a non-empty BeerList
     // EFFECTS: receives an operation choice and directs to operation
     private void viewBeerList() {
-        String operation;
+        int operation;
 
         while (true) {
             System.out.println("Please select an option: [1] View by default [2] View by name "
                     + "[3] View by rating [4] Return");
-            operation = scanner.nextLine();
+            operation = scanner.nextInt();
             System.out.println("You have selected: " + printOperationView(operation));
-            if (operation.equals("1")) {
-                noSort(beerList);
-            } else if (operation.equals("2")) {
-                sortByName(beerList);
-            } else if (operation.equals("3")) {
-                sortByRating(beerList);
-            } else if (operation.equals("4")) {
+            if (operation == 4) {
                 System.out.println("Returning");
                 break;
+            } else {
+                findViewOperation(operation);
             }
         }
     }
+
+    // REQUIRES: operation to be an int [1,3]
+    // EFFECTS: directs operation to proper operation choice
+    private void findViewOperation(int operation) {
+        switch (operation) {
+            case 1:
+                noSort(beerList);
+                break;
+            case 2:
+                sortByName(beerList);
+                break;
+            case 3:
+                sortByRating(beerList);
+                break;
+            default: // do nothing
+                break;
+        }
+    }
+
 }

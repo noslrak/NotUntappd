@@ -1,8 +1,5 @@
 package model;
 
-import ui.Loadable;
-import ui.Savable;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -44,19 +41,19 @@ public final class Utility implements Loadable, Savable {
 
     // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out operation choice from searchBeerList
-    public static String printOperationSearch(String operation) {
+    public static String printOperationSearch(int operation) {
         String message = "";
         switch (operation) {
-            case "1":
+            case 1:
                 message = "[1] Search by beer name";
                 break;
-            case "2":
+            case 2:
                 message = "[2] Search by brewery";
                 break;
-            case "3":
+            case 3:
                 message = "[3] Search by rating";
                 break;
-            case "4":
+            case 4:
                 message = "[4] Return";
                 break;
             default: // do nothing
@@ -67,20 +64,20 @@ public final class Utility implements Loadable, Savable {
 
     // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out the selected operation from viewBeerList
-    public static String printOperationView(String operation) {
+    public static String printOperationView(int operation) {
         String message = "";
 
         switch (operation) {
-            case "1":
+            case 1:
                 message = "[1] View default";
                 break;
-            case "2":
+            case 2:
                 message = "[2] View sorted by name";
                 break;
-            case "3":
+            case 3:
                 message = "[3] View sorted by rating";
                 break;
-            case "4":
+            case 4:
                 message = "[4] Return";
                 break;
             default: // do nothing

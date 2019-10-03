@@ -5,11 +5,12 @@ import model.Utility;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SavableTest {
     private Utility utility = new Utility();
@@ -31,11 +32,12 @@ class SavableTest {
     @Test
     void testSave() throws IOException, ClassNotFoundException {
         utility.saveFile(beerList, "testSave");
+        String beerString = beerList.toString();
 
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("testSave" + ".txt"));
         testList = (ArrayList<BeerEntry>) in.readObject();
         in.close();
-
-        assertEquals(beerList, testList);
+        String testString = testList.toString();
+        assertEquals(beerString, testString);
     }
 }

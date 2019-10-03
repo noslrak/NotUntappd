@@ -10,8 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LoadableTest {
     private Utility utility = new Utility();
@@ -39,14 +38,8 @@ class LoadableTest {
         fileOut.close();
 
         testList = utility.loadFile("testLoad");
-        assertEquals(beerList, testList);
-    }
-
-    @Test
-    void testLoadAgain() throws IOException {
-        utility.saveFile(beerList, "testAgain");
-        testList = utility.loadFile("testAgain");
-
-        assertEquals(beerList, testList);
+        String beerString = beerList.toString();
+        String testString = testList.toString();
+        assertEquals(beerString, testString);
     }
 }
