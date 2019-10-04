@@ -57,4 +57,9 @@ class BeerEntryTest {
     void testGetComments() {
         assertEquals("", operis.getBeerComments());
     }
+
+    @Test
+    void testToString() {
+        assertEquals("Beer: Operis Brewery: Four Winds Rating: 4.20 Comments: ", operis.toString());
+    }
 }

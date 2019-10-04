@@ -1,12 +1,11 @@
 package tests;
 
 import model.BeerEntry;
+import model.Utility;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,6 +21,7 @@ class UtilityTest {
     private BeerEntry magic = new BeerEntry("Magic Lambic", "Cantillion", 4.75, "");
     private Random random = new Random();
     private int rand;
+    private Utility utility = new Utility();
 
     @BeforeEach
     void runBefore() {
@@ -154,5 +154,31 @@ class UtilityTest {
                 + "Beer: Operis Brewery: Four Winds Rating: 4.20 Comments:", os.toString().trim());
         PrintStream originalOut = System.out;
         System.setOut(originalOut);
+    }
+
+    @Test
+    void testLoad() throws IOException, ClassNotFoundException {
+        FileOutputStream fileOut = new FileOutputStream(new File("testLoad.txt"));
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(beerList);
+        out.close();
+        fileOut.close();
+
+        testList = utility.loadFile("testLoad");
+        String beerString = beerList.toString();
+        String testString = testList.toString();
+        assertEquals(beerString, testString);
+    }
+
+    @Test
+    void testSave() throws IOException, ClassNotFoundException {
+        utility.saveFile(beerList, "testSave");
+        String beerString = beerList.toString();
+
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("testSave" + ".txt"));
+        testList = (ArrayList<BeerEntry>) in.readObject();
+        in.close();
+        String testString = testList.toString();
+        assertEquals(beerString, testString);
     }
 }

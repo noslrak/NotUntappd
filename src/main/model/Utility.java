@@ -165,28 +165,21 @@ public final class Utility implements Loadable, Savable {
     // Load and save adapted from: https://stackoverflow.com/questions/16145682/deserialize-multiple-java-objects and
     //                             https://www.mkyong.com/java/how-to-read-and-write-java-object-to-a-file/
     @Override
-    public void saveFile(ArrayList<BeerEntry> beerList, String name) {
-        try {
-            FileOutputStream fileOut = new FileOutputStream(new File(name + ".txt"));
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(beerList);
-            out.close();
-            fileOut.close();
-        } catch (IOException ex) {
-            System.out.println("File unable to be saved");
-        }
+    public void saveFile(ArrayList<BeerEntry> beerList, String name) throws IOException {
+        FileOutputStream fileOut = new FileOutputStream(new File(name + ".txt"));
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(beerList);
+        out.close();
+        fileOut.close();
     }
 
     @Override
-    public ArrayList<BeerEntry> loadFile(String name) {
-        ArrayList<BeerEntry> beerList = null;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(name + ".txt"));
-            beerList = (ArrayList<BeerEntry>) in.readObject();
-            in.close();
-        } catch (Exception e) {
-            System.out.println("File not found");
-        }
+    public ArrayList<BeerEntry> loadFile(String name) throws IOException, ClassNotFoundException {
+        ArrayList<BeerEntry> beerList;
+
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(name + ".txt"));
+        beerList = (ArrayList<BeerEntry>) in.readObject();
+        in.close();
         return beerList;
     }
 }

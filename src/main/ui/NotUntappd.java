@@ -3,6 +3,7 @@ package ui;
 import model.BeerEntry;
 import model.Utility;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +15,7 @@ class NotUntappd {
     private Scanner scanner;
     private Utility utility = new Utility();
 
-    NotUntappd() {
+    NotUntappd() throws IOException, ClassNotFoundException {
         scanner = new Scanner(System.in);
         int operation;
         String fileName;
@@ -36,7 +37,7 @@ class NotUntappd {
     }
 
     // EFFECTS: receives an operation choice and directs to operation
-    private void processOperations() {
+    private void processOperations() throws IOException {
         int operation;
 
         while (true) {
@@ -73,7 +74,7 @@ class NotUntappd {
         }
     }
 
-    private void toSave() {
+    private void toSave() throws IOException {
         int operation;
 
         System.out.println("Would you like to save? [1] Yes [2] No");
@@ -84,7 +85,7 @@ class NotUntappd {
         }
     }
 
-    private void enterFileName() {
+    private void enterFileName() throws IOException {
         String fileName;
 
         System.out.println("Please enter a file name");
