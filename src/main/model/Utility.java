@@ -141,37 +141,25 @@ public final class Utility implements Loadable, Savable {
     // REQUIRES: beerList is not empty
     // EFFECTS: prints out beerList in default view
     public static void noSort(ArrayList<BeerEntry> beerList) {
-        if (beerList.isEmpty()) {
-            System.out.println("No beers entered");
-        } else {
-            System.out.println("Default view: ");
-            printList(beerList);
-        }
+        System.out.println("Default view: ");
+        printList(beerList);
     }
 
     // REQUIRES: beerList is not empty
     // EFFECTS: prints out beerList sorted by name
     public static void sortByName(ArrayList<BeerEntry> beerList) {
-        if (beerList.isEmpty()) {
-            System.out.println("No beers entered");
-        } else {
-            beerList.sort(Comparator.comparing(BeerEntry::getBeerName));
-            System.out.println("Sorted by name: ");
-            printList(beerList);
-        }
+        beerList.sort(Comparator.comparing(BeerEntry::getBeerName));
+        System.out.println("Sorted by name: ");
+        printList(beerList);
     }
 
     // REQUIRES: beerList is not empty
     // EFFECTS: prints out beerList sorted by rating, then by name is ratings are equal
     public static void sortByRating(ArrayList<BeerEntry> beerList) {
-        if (beerList.isEmpty()) {
-            System.out.println("No beers entered");
-        } else {
-            beerList.sort(Comparator.comparing(BeerEntry::getBeerRating).reversed()
-                    .thenComparing(BeerEntry::getBeerName));
-            System.out.println("Sorted by rating");
-            printList(beerList);
-        }
+        beerList.sort(Comparator.comparing(BeerEntry::getBeerRating).reversed()
+                .thenComparing(BeerEntry::getBeerName));
+        System.out.println("Sorted by rating: ");
+        printList(beerList);
     }
 
     // Load and save adapted from: https://stackoverflow.com/questions/16145682/deserialize-multiple-java-objects and

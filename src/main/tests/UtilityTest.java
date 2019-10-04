@@ -125,4 +125,34 @@ class UtilityTest {
         PrintStream originalOut = System.out;
         System.setOut(originalOut);
     }
+
+    @Test
+    void testSortByName() {
+        OutputStream os = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(os);
+        System.setOut(ps);
+
+        sortByName(beerList);
+        assertEquals("Sorted by name: \n"
+                + "Beer: Magic Lambic Brewery: Cantillion Rating: 4.75 Comments: \n"
+                + "Beer: Noa Brewery: Omnipollo Rating: 4.40 Comments: Test\n"
+                + "Beer: Operis Brewery: Four Winds Rating: 4.20 Comments:", os.toString().trim());
+        PrintStream originalOut = System.out;
+        System.setOut(originalOut);
+    }
+
+    @Test
+    void testSortByRating() {
+        OutputStream os = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(os);
+        System.setOut(ps);
+
+        sortByRating(beerList);
+        assertEquals("Sorted by rating: \n"
+                + "Beer: Magic Lambic Brewery: Cantillion Rating: 4.75 Comments: \n"
+                + "Beer: Noa Brewery: Omnipollo Rating: 4.40 Comments: Test\n"
+                + "Beer: Operis Brewery: Four Winds Rating: 4.20 Comments:", os.toString().trim());
+        PrintStream originalOut = System.out;
+        System.setOut(originalOut);
+    }
 }

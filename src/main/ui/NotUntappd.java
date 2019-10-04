@@ -183,15 +183,20 @@ class NotUntappd {
         int operation;
 
         while (true) {
-            System.out.println("Please select an option: [1] View by default [2] View by name "
-                    + "[3] View by rating [4] Return");
-            operation = scanner.nextInt();
-            System.out.println("You have selected: " + printOperationView(operation));
-            if (operation == 4) {
-                System.out.println("Returning");
+            if (beerList.isEmpty()) {
+                System.out.println("No beers have been entered");
                 break;
             } else {
-                findViewOperation(operation);
+                System.out.println("Please select an option: [1] View by default [2] View by name "
+                        + "[3] View by rating [4] Return");
+                operation = scanner.nextInt();
+                System.out.println("You have selected: " + printOperationView(operation));
+                if (operation == 4) {
+                    System.out.println("Returning");
+                    break;
+                } else {
+                    findViewOperation(operation);
+                }
             }
         }
     }
