@@ -110,4 +110,19 @@ class UtilityTest {
         PrintStream originalOut = System.out;
         System.setOut(originalOut);
     }
+
+    @Test
+    void testNoSortList() {
+        OutputStream os = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(os);
+        System.setOut(ps);
+
+        noSort(beerList);
+        assertEquals("Default view: \n"
+                + "Beer: Operis Brewery: Four Winds Rating: 4.20 Comments: \nBeer: Noa Brewery: "
+                + "Omnipollo Rating: 4.40 Comments: Test\nBeer: Magic Lambic Brewery: Cantillion "
+                + "Rating: 4.75 Comments:", os.toString().trim());
+        PrintStream originalOut = System.out;
+        System.setOut(originalOut);
+    }
 }
