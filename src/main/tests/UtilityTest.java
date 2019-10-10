@@ -1,6 +1,7 @@
 package tests;
 
 import model.BeerEntry;
+import model.FreeBeerEntry;
 import model.Utility;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class UtilityTest {
     private ArrayList<BeerEntry> beerList;
     private ArrayList<BeerEntry> testList;
-    private BeerEntry operis = new BeerEntry("Operis", "Four Winds", 4.2, "");
-    private BeerEntry noa = new BeerEntry("Noa", "Omnipollo", 4.4, "Test");
-    private BeerEntry magic = new BeerEntry("Magic Lambic", "Cantillion", 4.75, "");
+    private FreeBeerEntry operis = new FreeBeerEntry("Operis", "Four Winds", 4.2, "");
+    private FreeBeerEntry noa = new FreeBeerEntry("Noa", "Omnipollo", 4.4, "Test");
+    private FreeBeerEntry magic = new FreeBeerEntry("Magic Lambic", "Cantillion", 4.75, "");
     private Random random = new Random();
     private int rand;
     private Utility utility = new Utility();
@@ -44,7 +45,7 @@ class UtilityTest {
 
     @Test
     void testFindBeerName() {
-        BeerEntry test = new BeerEntry("Operis", "Test", 0, "");
+        FreeBeerEntry test = new FreeBeerEntry("Operis", "Test", 0, "");
         beerList.add(test);
         testList.add(operis);
         testList.add(test);

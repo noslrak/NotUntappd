@@ -139,6 +139,21 @@ public final class Utility implements Loadable, Savable {
     }
 
     // REQUIRES: beerList is not empty
+    // MODIFIES: this
+    // EFFECTS: takes in a beer style and a beerList and produces a new list of beers with the same style
+    public static ArrayList<BeerEntry> searchStyle(String style, ArrayList<PremiumBeerEntry> beerList) {
+        ArrayList<BeerEntry> styleList = new ArrayList<>();
+
+        for (PremiumBeerEntry beerEntry : beerList) {
+            if (beerEntry.getBeerStyle().equals(style)) {
+                styleList.add(beerEntry);
+            }
+        }
+        styleList.sort(Comparator.comparing(BeerEntry::getBeerName));
+        return styleList;
+    }
+
+    // REQUIRES: beerList is not empty
     // EFFECTS: prints out beerList in default view
     public static void noSort(ArrayList<BeerEntry> beerList) {
         System.out.println("Default view: ");
@@ -162,9 +177,6 @@ public final class Utility implements Loadable, Savable {
         printList(beerList);
     }
 
-    // Load and save adapted from: https://stackoverflow.com/questions/16145682/deserialize-multiple-java-objects and
-    //                             https://www.mkyong.com/java/how-to-read-and-write-java-object-to-a-file/
-    @Override
     public void saveFile(ArrayList<BeerEntry> beerList, String name) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(new File(name + ".txt"));
         ObjectOutputStream out = new ObjectOutputStream(fileOut);

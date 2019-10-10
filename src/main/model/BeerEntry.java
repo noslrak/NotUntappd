@@ -3,20 +3,12 @@ package model;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 
-public class BeerEntry implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private String beerName;
-    private String breweryName;
-    private double beerRating;
-    private String beerComments;
-
-    // Constructor
-    public BeerEntry(String name, String brewery, double rating, String comments) {
-        this.beerName = name;
-        this.breweryName = brewery;
-        this.beerRating = rating;
-        this.beerComments = comments;
-    }
+public abstract class BeerEntry implements Serializable {
+    protected static final long serialVersionUID = 1L;
+    String beerName;
+    String breweryName;
+    double beerRating;
+    String beerComments;
 
     // Setters
     // MODIFIES: this
@@ -64,12 +56,10 @@ public class BeerEntry implements Serializable {
         return beerComments;
     }
 
-    private DecimalFormat format = new DecimalFormat("##.00");
+    DecimalFormat format = new DecimalFormat("##.00");
 
     public String toString() {
         return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Rating: " + format.format(beerRating)
                 + " " + "Comments: " + beerComments;
     }
 }
-
-

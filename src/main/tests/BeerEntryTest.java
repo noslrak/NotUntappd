@@ -1,18 +1,18 @@
 package tests;
 
-import model.BeerEntry;
+import model.FreeBeerEntry;
 
+import model.PremiumBeerEntry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BeerEntryTest {
-    private BeerEntry operis = new BeerEntry("Operis", "Four Winds", 4.2, "");
-    private BeerEntry blank = new BeerEntry("", "", 0, "");
-
-    @BeforeEach
-    void runBefore() {
-    }
+    private FreeBeerEntry operis = new FreeBeerEntry("Operis", "Four Winds", 4.2, "");
+    private FreeBeerEntry blank = new FreeBeerEntry("", "", 0, "");
+    private PremiumBeerEntry magic = new PremiumBeerEntry("Magic Lambic", "Cantillion", "Lambic",
+            4.75, "");
+    private PremiumBeerEntry premiumBlank = new PremiumBeerEntry("", "", "", 0, "");
 
     @Test
     void testSetBeerName() {
@@ -39,6 +39,12 @@ class BeerEntryTest {
     }
 
     @Test
+    void testSetBeerStyle() {
+        premiumBlank.setBeerStyle("Gose");
+        assertEquals("Gose", premiumBlank.getBeerStyle());
+    }
+
+    @Test
     void testGetBeerName() {
         assertEquals("Operis", operis.getBeerName());
     }
@@ -56,6 +62,11 @@ class BeerEntryTest {
     @Test
     void testGetComments() {
         assertEquals("", operis.getBeerComments());
+    }
+
+    @Test
+    void testGetBeerStyle() {
+        assertEquals("Lambic", magic.getBeerStyle());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package ui;
 
 import model.BeerEntry;
+import model.FreeBeerEntry;
 import model.Utility;
 
 import java.io.IOException;
@@ -9,35 +10,14 @@ import java.util.Scanner;
 
 import static model.Utility.*;
 
-class NotUntappd {
+abstract class NotUntappd {
     // Initial functionality taken from B04 LoggingCalculator
-    private ArrayList<BeerEntry> beerList;
-    private Scanner scanner;
-    private Utility utility = new Utility();
-
-    NotUntappd() throws IOException, ClassNotFoundException {
-        scanner = new Scanner(System.in);
-        int operation;
-        String fileName;
-
-        System.out.println("Please select an option: [1] Load previous NotUntappd or any other Integer to start new "
-                + "NotUntappd");
-        operation = scanner.nextInt();
-        scanner.nextLine();
-        if (loadPrevious(operation)) {
-            System.out.println("Please enter the name of previous NotUntappd");
-            fileName = scanner.nextLine();
-            System.out.println("Loading " + fileName);
-            beerList = utility.loadFile(fileName);
-        } else {
-            System.out.println("Starting new instance of NotUntappd");
-            beerList = new ArrayList<>();
-        }
-        processOperations();
-    }
+    ArrayList<BeerEntry> beerList;
+    Scanner scanner;
+    Utility utility = new Utility();
 
     // EFFECTS: receives an operation choice and directs to operation
-    private void processOperations() throws IOException {
+    void processOperations() throws IOException {
         int operation;
 
         while (true) {
@@ -95,7 +75,7 @@ class NotUntappd {
     }
 
     // EFFECTS: creates a new BeerEntry and adds new BeerEntry to beerList
-    private void newBeerEntry() {
+    protected void newBeerEntry() {
         System.out.println("Please enter a beer name: ");
         String name = scanner.nextLine();
         System.out.println("Please enter the name of the brewery: ");
@@ -105,11 +85,11 @@ class NotUntappd {
         scanner.nextLine();
         System.out.println("Please enter any comments or leave blank: ");
         String comments = scanner.nextLine();
-        beerList.add(new BeerEntry(name, brewery, rating, comments));
+        beerList.add(new FreeBeerEntry(name, brewery, rating, comments));
     }
 
     // EFFECTS: receives an operation choice and directs to operation
-    private void searchBeerList() {
+    protected void searchBeerList() {
         int operation;
 
         while (true) {
@@ -128,7 +108,7 @@ class NotUntappd {
 
     // REQUIRES: operation to be an int [1,3]
     // EFFECTS: directs operation to proper operation choice
-    private void findSearchOperation(int operation) {
+    protected void findSearchOperation(int operation) {
         switch (operation) {
             case 1:
                 searchBeerName();
@@ -145,7 +125,7 @@ class NotUntappd {
     }
 
     // EFFECTS: retrieve entry of beer name(s), if multiple beers of same name retrieved sort by brewery name
-    private void searchBeerName() {
+    void searchBeerName() {
         ArrayList<BeerEntry> nameList;
 
         System.out.println("Please enter a beer name: ");
@@ -155,7 +135,7 @@ class NotUntappd {
     }
 
     // EFFECTS: allows searching for a brewery name and produces a list of beers from the brewery
-    private void findBrewery() {
+    void findBrewery() {
         ArrayList<BeerEntry> foundList;
 
         System.out.println("Please enter a brewery name: ");
@@ -167,7 +147,7 @@ class NotUntappd {
 
     // REQUIRES: beerList is not empty
     // EFFECTS: generates a new list of beers sorted by rating, then by name if rating is tied
-    private void filterByRating() {
+    void filterByRating() {
         ArrayList<BeerEntry> ratingList;
 
         System.out.println("Please enter a minimum rating [0.00 - 5.00]: ");
