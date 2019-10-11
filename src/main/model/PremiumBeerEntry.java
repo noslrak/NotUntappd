@@ -24,7 +24,7 @@ public class PremiumBeerEntry extends BeerEntry {
 
     @Override
     public String toString() {
-        return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Style: " + beerStyle + "Rating: "
+        return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Style: " + beerStyle + " Rating: "
                 + format.format(beerRating) + " " + "Comments: " + beerComments;
     }
 }

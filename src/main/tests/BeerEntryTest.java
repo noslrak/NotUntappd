@@ -73,4 +73,9 @@ class BeerEntryTest {
     void testToString() {
         assertEquals("Beer: Operis Brewery: Four Winds Rating: 4.20 Comments: ", operis.toString());
     }
+
+    @Test
+    void testPremiumToString() {
+        assertEquals("Beer: Magic Lambic Brewery: Cantillion Style: Lambic Rating: 4.75 Comments: ", magic.toString());
+    }
 }

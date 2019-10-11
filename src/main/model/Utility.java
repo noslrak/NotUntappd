@@ -4,15 +4,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public final class Utility implements Loadable, Savable {
+public final class Utility {
 
     public static boolean loadPrevious(int operation) {
-        boolean b = true;
-
-        if (operation != 1) {
-            b = false;
-        }
-        return b;
+        return operation == 1;
     }
 
     // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
@@ -84,114 +79,5 @@ public final class Utility implements Loadable, Savable {
                 break;
         }
         return message;
-    }
-
-    // EFFECTS: prints out a given list of beerEntry
-    public static void printList(ArrayList<BeerEntry> list) {
-        for (BeerEntry beerEntry : list) {
-            System.out.println(beerEntry);
-        }
-    }
-
-    // REQUIRES: beerList is not empty
-    // MODIFIES: this
-    // EFFECTS: attempts to find name of given beer in beerList
-    public static ArrayList<BeerEntry> findBeerName(String name, ArrayList<BeerEntry> beerList) {
-        ArrayList<BeerEntry> foundList = new ArrayList<>();
-
-        for (BeerEntry beerEntry : beerList) {
-            if (beerEntry.getBeerName().equals(name)) {
-                foundList.add(beerEntry);
-            }
-        }
-        foundList.sort(Comparator.comparing(BeerEntry::getBrewery));
-        return foundList;
-    }
-
-    // REQUIRES: beerList is not empty
-    // MODIFIES: this
-    // EFFECTS: takes in a name of a brewery and a beerList, filters out beers from the brewery
-    public static ArrayList<BeerEntry> searchBrewery(String brewery, ArrayList<BeerEntry> beerList) {
-        ArrayList<BeerEntry> foundList = new ArrayList<>();
-
-        for (BeerEntry beerEntry : beerList) {
-            if (beerEntry.getBrewery().equals(brewery)) {
-                foundList.add(beerEntry);
-            }
-        }
-        foundList.sort(Comparator.comparing(BeerEntry::getBeerName));
-        return foundList;
-    }
-
-    // REQUIRES: beerList is not empty
-    // MODIFIES: this
-    // EFFECTS: takes in a rating x and a beerList and produces a new list of beers with rating >= x
-    public static ArrayList<BeerEntry> searchRating(double rating, ArrayList<BeerEntry> beerList) {
-        ArrayList<BeerEntry> ratingList = new ArrayList<>();
-
-        for (BeerEntry beerEntry : beerList) {
-            if (beerEntry.getBeerRating() >= rating) {
-                ratingList.add(beerEntry);
-            }
-        }
-        ratingList.sort(Comparator.comparing(BeerEntry::getBeerName));
-        return ratingList;
-    }
-
-    // REQUIRES: beerList is not empty
-    // MODIFIES: this
-    // EFFECTS: takes in a beer style and a beerList and produces a new list of beers with the same style
-    public static ArrayList<BeerEntry> searchStyle(String style, ArrayList<PremiumBeerEntry> beerList) {
-        ArrayList<BeerEntry> styleList = new ArrayList<>();
-
-        for (PremiumBeerEntry beerEntry : beerList) {
-            if (beerEntry.getBeerStyle().equals(style)) {
-                styleList.add(beerEntry);
-            }
-        }
-        styleList.sort(Comparator.comparing(BeerEntry::getBeerName));
-        return styleList;
-    }
-
-    // REQUIRES: beerList is not empty
-    // EFFECTS: prints out beerList in default view
-    public static void noSort(ArrayList<BeerEntry> beerList) {
-        System.out.println("Default view: ");
-        printList(beerList);
-    }
-
-    // REQUIRES: beerList is not empty
-    // EFFECTS: prints out beerList sorted by name
-    public static void sortByName(ArrayList<BeerEntry> beerList) {
-        beerList.sort(Comparator.comparing(BeerEntry::getBeerName));
-        System.out.println("Sorted by name: ");
-        printList(beerList);
-    }
-
-    // REQUIRES: beerList is not empty
-    // EFFECTS: prints out beerList sorted by rating, then by name is ratings are equal
-    public static void sortByRating(ArrayList<BeerEntry> beerList) {
-        beerList.sort(Comparator.comparing(BeerEntry::getBeerRating).reversed()
-                .thenComparing(BeerEntry::getBeerName));
-        System.out.println("Sorted by rating: ");
-        printList(beerList);
-    }
-
-    public void saveFile(ArrayList<BeerEntry> beerList, String name) throws IOException {
-        FileOutputStream fileOut = new FileOutputStream(new File(name + ".txt"));
-        ObjectOutputStream out = new ObjectOutputStream(fileOut);
-        out.writeObject(beerList);
-        out.close();
-        fileOut.close();
-    }
-
-    @Override
-    public ArrayList<BeerEntry> loadFile(String name) throws IOException, ClassNotFoundException {
-        ArrayList<BeerEntry> beerList;
-
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(name + ".txt"));
-        beerList = (ArrayList<BeerEntry>) in.readObject();
-        in.close();
-        return beerList;
     }
 }
