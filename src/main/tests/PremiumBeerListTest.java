@@ -2,15 +2,13 @@ package tests;
 
 import model.PremiumBeerEntry;
 import model.PremiumBeerList;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import model.exceptions.EmptyListException;
+import org.junit.jupiter.api.*;
 
 import java.io.*;
-import java.util.Random;
+import java.util.ArrayList;
 
 import static java.util.Collections.emptyList;
-import static model.Utility.*;
-import static model.Utility.printOperationView;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -145,21 +143,18 @@ class PremiumBeerListTest {
         assertEquals(beerString, testString);
     }
 
-    /*@Test
-    void testLoadFileNotFoundException() throws IOException {
-        assertThrows(FileNotFoundException.class, beerList.loadFile("test"));
-    }
-*/
-    /*@Test
+    @Test
     void testSave() throws IOException, ClassNotFoundException {
+        ArrayList<PremiumBeerEntry> loadList;
+
         beerList.saveFile("testSave");
         String beerString = beerList.getList().toString();
 
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("testSave" + ".txt"));
-        testList = (FreeBeerList) in.readObject();
+        loadList = (ArrayList<PremiumBeerEntry>) in.readObject();
         in.close();
-        String testString = testList.getList().toString();
-        assertEquals(beerString, testString);
-    }*/
+        String loadString = loadList.toString();
+        assertEquals(beerString, loadString);
+    }
 }
 

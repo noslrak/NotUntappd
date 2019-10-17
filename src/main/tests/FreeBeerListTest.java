@@ -1,11 +1,13 @@
 package tests;
 
 import model.*;
+import model.exceptions.MaxSizeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -23,7 +25,7 @@ class FreeBeerListTest {
     private int rand;
 
     @BeforeEach
-    void runBefore() {
+    void runBefore() throws MaxSizeException {
         beerList = new FreeBeerList();
         beerList.addBeerEntry(operis);
         beerList.addBeerEntry(noa);
@@ -33,13 +35,21 @@ class FreeBeerListTest {
     }
 
     @Test
+    void testMaxSizeException() throws MaxSizeException {
+        for (int i = 0; i < FreeBeerList.maxEntry; i++) {
+            testList.addBeerEntry(magic);
+        }
+        assertThrows(MaxSizeException.class, () -> testList.addBeerEntry(magic));
+    }
+
+    @Test
     void testIsEmpty() {
         assertFalse(beerList.isEmpty());
         assertTrue(testList.isEmpty());
     }
 
     @Test
-    void testFindBeerName() {
+    void testFindBeerName() throws MaxSizeException {
         FreeBeerEntry test = new FreeBeerEntry("Operis", "Test", 0, "");
         beerList.addBeerEntry(test);
         testList.addBeerEntry(operis);
@@ -50,7 +60,7 @@ class FreeBeerListTest {
     }
 
     @Test
-    void testSearchBrewery() {
+    void testSearchBrewery() throws MaxSizeException {
         testList.addBeerEntry(magic);
 
         assertEquals(emptyList(), beerList.searchBrewery("Russian River Brewing"));
@@ -58,7 +68,7 @@ class FreeBeerListTest {
     }
 
     @Test
-    void testSearchRating() {
+    void testSearchRating() throws MaxSizeException {
         testList.addBeerEntry(magic);
         testList.addBeerEntry(noa);
 
@@ -139,20 +149,17 @@ class FreeBeerListTest {
         assertEquals(beerString, testString);
     }
 
-    /*@Test
-    void testLoadFileNotFoundException() throws IOException {
-        assertThrows(FileNotFoundException.class, beerList.loadFile("test"));
-    }
-*/
-    /*@Test
+    @Test
     void testSave() throws IOException, ClassNotFoundException {
+        ArrayList<FreeBeerEntry> loadList;
+
         beerList.saveFile("testSave");
         String beerString = beerList.getList().toString();
 
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("testSave" + ".txt"));
-        testList = (FreeBeerList) in.readObject();
+        loadList = (ArrayList<FreeBeerEntry>) in.readObject();
         in.close();
-        String testString = testList.getList().toString();
-        assertEquals(beerString, testString);
-    }*/
+        String loadString = loadList.toString();
+        assertEquals(beerString, loadString);
+    }
 }

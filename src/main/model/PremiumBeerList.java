@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.EmptyListException;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -7,7 +9,8 @@ import java.util.Comparator;
 public class PremiumBeerList extends BeerList {
     private ArrayList<PremiumBeerEntry> beerList = new ArrayList<>();
 
-    public PremiumBeerList() {}
+    public PremiumBeerList() {
+    }
 
     public void addBeerEntry(PremiumBeerEntry beerEntry) {
         beerList.add(beerEntry);
@@ -119,6 +122,18 @@ public class PremiumBeerList extends BeerList {
         return styleList;
     }
 
+    public void removeByName(String name) throws EmptyListException {
+        if (beerList.isEmpty()) {
+            throw new EmptyListException();
+        } else {
+            for (PremiumBeerEntry beerEntry : beerList) {
+                if (beerEntry.getBeerName().equals(name)) {
+                    beerList.remove(beerEntry);
+                }
+            }
+        }
+    }
+
     @Override
     public void saveFile(String name) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(new File(name + ".txt"));
@@ -141,9 +156,10 @@ public class PremiumBeerList extends BeerList {
             System.out.println("File not found");
             fileFound = false;
         } catch (ClassNotFoundException e) {
-            System.out.println("ClassNotFoundException");
+            System.out.println("Exception: class not found");
         } finally {
             if (fileFound) {
+                assert in != null;
                 in.close();
             }
         }

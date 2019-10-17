@@ -3,6 +3,7 @@ package ui;
 import model.BeerEntry;
 import model.FreeBeerEntry;
 import model.FreeBeerList;
+import model.exceptions.MaxSizeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import static model.Utility.*;
 class FreeNotUntappd extends NotUntappd {
     private FreeBeerList beerList;
 
-    FreeNotUntappd() throws IOException, ClassNotFoundException {
+    FreeNotUntappd() throws IOException {
         scanner = new Scanner(System.in);
         int operation;
         String fileName;
@@ -54,7 +55,11 @@ class FreeNotUntappd extends NotUntappd {
         scanner.nextLine();
         System.out.println("Please enter any comments or leave blank: ");
         String comments = scanner.nextLine();
-        beerList.addBeerEntry(new FreeBeerEntry(name, brewery, rating, comments));
+        try {
+            beerList.addBeerEntry(new FreeBeerEntry(name, brewery, rating, comments));
+        } catch (MaxSizeException e) {
+            System.out.println("Maximum number of entries reached");
+        }
     }
 
     // EFFECTS: retrieve entry of beer name(s), if multiple beers of same name retrieved sort by brewery name

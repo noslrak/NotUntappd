@@ -1,16 +1,23 @@
 package model;
 
+import model.exceptions.MaxSizeException;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class FreeBeerList extends BeerList {
     private ArrayList<FreeBeerEntry> beerList = new ArrayList<>();
+    public static final int maxEntry = 50;
 
     public FreeBeerList() {}
 
-    public void addBeerEntry(FreeBeerEntry beerEntry) {
-        beerList.add(beerEntry);
+    public void addBeerEntry(FreeBeerEntry beerEntry) throws MaxSizeException {
+        if (beerList.size() >= maxEntry) {
+            throw new MaxSizeException();
+        } else {
+            beerList.add(beerEntry);
+        }
     }
 
     public boolean isEmpty() {
