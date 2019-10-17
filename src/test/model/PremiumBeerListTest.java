@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.EmptyListException;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
@@ -152,6 +153,20 @@ class PremiumBeerListTest {
         in.close();
         String loadString = loadList.toString();
         assertEquals(beerString, loadString);
+    }
+
+    @Test
+    void testEmptyListException() {
+        assertThrows(EmptyListException.class, () -> testList.removeByName("Operis"));
+    }
+
+    @Test
+    void testRemoveByName() throws EmptyListException {
+        testList.addBeerEntry(operis);
+        testList.addBeerEntry(magic);
+        beerList.removeByName("Noa");
+
+        assertEquals(testList.getList(), beerList.getList());
     }
 }
 
