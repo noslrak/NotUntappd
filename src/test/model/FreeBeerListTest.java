@@ -1,31 +1,41 @@
-package tests;
+package model;
 
-import model.PremiumBeerEntry;
-import model.PremiumBeerList;
-import model.exceptions.EmptyListException;
-import org.junit.jupiter.api.*;
+import model.exceptions.MaxSizeException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class PremiumBeerListTest {
-    private PremiumBeerList beerList;
-    private PremiumBeerList testList;
-    private PremiumBeerEntry operis = new PremiumBeerEntry("Operis", "Four Winds", "Sour",4.2, "");
-    private PremiumBeerEntry noa = new PremiumBeerEntry("Noa", "Omnipollo", "Stout",4.4, "Test");
-    private PremiumBeerEntry magic = new PremiumBeerEntry("Magic Lambic", "Cantillion", "Lambic",  4.75, "");
+class FreeBeerListTest {
+    private FreeBeerList beerList;
+    private FreeBeerList testList;
+    private FreeBeerEntry operis = new FreeBeerEntry("Operis", "Four Winds", 4.2, "");
+    private FreeBeerEntry noa = new FreeBeerEntry("Noa", "Omnipollo", 4.4, "Test");
+    private FreeBeerEntry magic = new FreeBeerEntry("Magic Lambic", "Cantillion", 4.75, "");
+    private Random random = new Random();
+    private int rand;
 
     @BeforeEach
-    void runBefore() {
-        beerList = new PremiumBeerList();
+    void runBefore() throws MaxSizeException {
+        beerList = new FreeBeerList();
         beerList.addBeerEntry(operis);
         beerList.addBeerEntry(noa);
         beerList.addBeerEntry(magic);
-        testList = new PremiumBeerList();
+        testList = new FreeBeerList();
+        rand = random.nextInt();
+    }
+
+    @Test
+    void testMaxSizeException() throws MaxSizeException {
+        for (int i = 0; i < FreeBeerList.maxEntry; i++) {
+            testList.addBeerEntry(magic);
+        }
+        assertThrows(MaxSizeException.class, () -> testList.addBeerEntry(magic));
     }
 
     @Test
@@ -35,8 +45,8 @@ class PremiumBeerListTest {
     }
 
     @Test
-    void testFindBeerName() {
-        PremiumBeerEntry test = new PremiumBeerEntry("Operis", "Test", "Sour",0, "");
+    void testFindBeerName() throws MaxSizeException {
+        FreeBeerEntry test = new FreeBeerEntry("Operis", "Test", 0, "");
         beerList.addBeerEntry(test);
         testList.addBeerEntry(operis);
         testList.addBeerEntry(test);
@@ -46,7 +56,7 @@ class PremiumBeerListTest {
     }
 
     @Test
-    void testSearchBrewery() {
+    void testSearchBrewery() throws MaxSizeException {
         testList.addBeerEntry(magic);
 
         assertEquals(emptyList(), beerList.searchBrewery("Russian River Brewing"));
@@ -54,20 +64,12 @@ class PremiumBeerListTest {
     }
 
     @Test
-    void testSearchRating() {
+    void testSearchRating() throws MaxSizeException {
         testList.addBeerEntry(magic);
         testList.addBeerEntry(noa);
 
         assertEquals(testList.getList(), beerList.searchRating(4.3));
         assertEquals(emptyList(), beerList.searchRating(4.8));
-    }
-
-    @Test
-    void testSearchStyle() {
-        testList.addBeerEntry(magic);
-
-        assertEquals(testList.getList(), beerList.searchStyle("Lambic"));
-        assertEquals(emptyList(), beerList.searchStyle("IPA"));
     }
 
     @Test
@@ -77,9 +79,9 @@ class PremiumBeerListTest {
         System.setOut(ps);
 
         beerList.printList();
-        assertEquals("Beer: Operis Brewery: Four Winds Style: Sour Rating: 4.20 Comments: \n"
-                + "Beer: Noa Brewery: Omnipollo Style: Stout Rating: 4.40 Comments: Test\nBeer: Magic Lambic Brewery: "
-                + "Cantillion Style: Lambic Rating: 4.75 Comments:", os.toString().trim());
+        assertEquals("Beer: Operis Brewery: Four Winds Rating: 4.20 Comments: \nBeer: Noa Brewery: "
+                + "Omnipollo Rating: 4.40 Comments: Test\nBeer: Magic Lambic Brewery: Cantillion "
+                + "Rating: 4.75 Comments:", os.toString().trim());
         PrintStream originalOut = System.out;
         System.setOut(originalOut);
     }
@@ -92,9 +94,9 @@ class PremiumBeerListTest {
 
         beerList.noSort();
         assertEquals("Default view: \n"
-                + "Beer: Operis Brewery: Four Winds Style: Sour Rating: 4.20 Comments: \nBeer: Noa Brewery: "
-                + "Omnipollo Style: Stout Rating: 4.40 Comments: Test\nBeer: Magic Lambic Brewery: Cantillion "
-                + "Style: Lambic Rating: 4.75 Comments:", os.toString().trim());
+                + "Beer: Operis Brewery: Four Winds Rating: 4.20 Comments: \nBeer: Noa Brewery: "
+                + "Omnipollo Rating: 4.40 Comments: Test\nBeer: Magic Lambic Brewery: Cantillion "
+                + "Rating: 4.75 Comments:", os.toString().trim());
         PrintStream originalOut = System.out;
         System.setOut(originalOut);
     }
@@ -107,9 +109,9 @@ class PremiumBeerListTest {
 
         beerList.sortByName();
         assertEquals("Sorted by name: \n"
-                + "Beer: Magic Lambic Brewery: Cantillion Style: Lambic Rating: 4.75 Comments: \n"
-                + "Beer: Noa Brewery: Omnipollo Style: Stout Rating: 4.40 Comments: Test\n"
-                + "Beer: Operis Brewery: Four Winds Style: Sour Rating: 4.20 Comments:", os.toString().trim());
+                + "Beer: Magic Lambic Brewery: Cantillion Rating: 4.75 Comments: \n"
+                + "Beer: Noa Brewery: Omnipollo Rating: 4.40 Comments: Test\n"
+                + "Beer: Operis Brewery: Four Winds Rating: 4.20 Comments:", os.toString().trim());
         PrintStream originalOut = System.out;
         System.setOut(originalOut);
     }
@@ -122,9 +124,9 @@ class PremiumBeerListTest {
 
         beerList.sortByRating();
         assertEquals("Sorted by rating: \n"
-                + "Beer: Magic Lambic Brewery: Cantillion Style: Lambic Rating: 4.75 Comments: \n"
-                + "Beer: Noa Brewery: Omnipollo Style: Stout Rating: 4.40 Comments: Test\n"
-                + "Beer: Operis Brewery: Four Winds Style: Sour Rating: 4.20 Comments:", os.toString().trim());
+                + "Beer: Magic Lambic Brewery: Cantillion Rating: 4.75 Comments: \n"
+                + "Beer: Noa Brewery: Omnipollo Rating: 4.40 Comments: Test\n"
+                + "Beer: Operis Brewery: Four Winds Rating: 4.20 Comments:", os.toString().trim());
         PrintStream originalOut = System.out;
         System.setOut(originalOut);
     }
@@ -145,16 +147,15 @@ class PremiumBeerListTest {
 
     @Test
     void testSave() throws IOException, ClassNotFoundException {
-        ArrayList<PremiumBeerEntry> loadList;
+        ArrayList<FreeBeerEntry> loadList;
 
         beerList.saveFile("testSave");
         String beerString = beerList.getList().toString();
 
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("testSave" + ".txt"));
-        loadList = (ArrayList<PremiumBeerEntry>) in.readObject();
+        loadList = (ArrayList<FreeBeerEntry>) in.readObject();
         in.close();
         String loadString = loadList.toString();
         assertEquals(beerString, loadString);
     }
 }
-

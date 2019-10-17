@@ -1,9 +1,5 @@
-package tests;
+package model;
 
-import model.FreeBeerEntry;
-
-import model.PremiumBeerEntry;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
