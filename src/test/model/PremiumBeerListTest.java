@@ -161,12 +161,12 @@ class PremiumBeerListTest {
     }
 
     @Test
-    void testRemoveByName() throws EmptyListException {
-        testList.addBeerEntry(operis);
-        testList.addBeerEntry(magic);
-        beerList.removeByName("Noa");
-
-        assertEquals(testList.getList(), beerList.getList());
+    void testRemoveByName() {
+        try {
+            beerList.removeByName("Noa");
+        } catch (EmptyListException e) {
+            fail();
+        }
     }
 }
 

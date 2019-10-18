@@ -31,11 +31,20 @@ class FreeBeerListTest {
     }
 
     @Test
-    void testMaxSizeException() throws MaxSizeException {
+    void testMaxSizeExceptionFail() throws MaxSizeException {
         for (int i = 0; i < FreeBeerList.maxEntry; i++) {
             testList.addBeerEntry(magic);
         }
         assertThrows(MaxSizeException.class, () -> testList.addBeerEntry(magic));
+    }
+
+    @Test
+    void testMaxSizeExceptionPass() {
+        try {
+            beerList.addBeerEntry(magic);
+        } catch (MaxSizeException e) {
+            fail();
+        }
     }
 
     @Test
