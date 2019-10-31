@@ -157,13 +157,13 @@ class PremiumBeerListTest {
 
     @Test
     void testEmptyListException() {
-        assertThrows(EmptyListException.class, () -> testList.removeByName("Operis"));
+        assertThrows(EmptyListException.class, () -> testList.removeBeerEntry("Operis", "Four Winds"));
     }
 
     @Test
     void testRemoveByName() {
         try {
-            beerList.removeByName("Noa");
+            beerList.removeBeerEntry("Noa", "Omnipollo");
         } catch (EmptyListException e) {
             fail();
         }

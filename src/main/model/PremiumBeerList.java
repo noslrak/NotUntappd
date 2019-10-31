@@ -167,8 +167,4 @@ public class PremiumBeerList extends BeerList {
         }
         beerList = loadList;
     }
-
-    public boolean contains(PremiumBeerEntry beerEntry) {
-        return beerList.contains(beerEntry);
-    }
 }
