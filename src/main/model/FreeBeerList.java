@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class FreeBeerList extends BeerList {
-    private ArrayList<FreeBeerEntry> beerList = new ArrayList<>();
+    private ArrayList<FreeBeerEntry> beerList;
     public static final int maxEntry = 50;
 
-    public FreeBeerList() {}
+    public FreeBeerList() {
+        beerList = new ArrayList<>();
+    }
 
     public void addBeerEntry(FreeBeerEntry beerEntry) throws MaxSizeException {
         if (beerList.size() >= maxEntry) {
@@ -114,6 +116,7 @@ public class FreeBeerList extends BeerList {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void loadFile(String name) throws IOException {
         ArrayList<FreeBeerEntry> loadList = new ArrayList<>();
         ObjectInputStream in = null;
@@ -129,6 +132,7 @@ public class FreeBeerList extends BeerList {
             System.out.println("ClassNotFoundException");
         } finally {
             if (fileFound) {
+                assert in != null;
                 in.close();
             }
         }

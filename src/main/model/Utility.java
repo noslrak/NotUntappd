@@ -13,71 +13,51 @@ public final class Utility {
     // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out operation choice from processOperations
     public static String printOperation(int operation) {
-        String message = "";
-
         switch (operation) {
             case 1:
-                message = "[1] Add a new beer entry";
-                break;
+                return "[1] Add a new beer entry";
             case 2:
-                message = "[2] Search beer list";
-                break;
+                return "[2] Search beer list";
             case 3:
-                message = "[3] View all beers";
-                break;
+                return "[3] View all beers";
             case 4:
-                message = "[4] Quit";
-                break;
+                return "[4] Quit";
             default: // do nothing
-                break;
+                return "";
         }
-        return message;
     }
 
     // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out operation choice from searchBeerList
     public static String printOperationSearch(int operation) {
-        String message = "";
         switch (operation) {
             case 1:
-                message = "[1] Search by beer name";
-                break;
+                return "[1] Search by beer name";
             case 2:
-                message = "[2] Search by brewery";
-                break;
+                return "[2] Search by brewery";
             case 3:
-                message = "[3] Search by rating";
-                break;
+                return "[3] Search by rating";
             case 4:
-                message = "[4] Return";
-                break;
+                return "[4] Return";
             default: // do nothing
-                break;
+                return "";
         }
-        return message;
     }
 
     // REQUIRES: operation to be a numerical string of 1, 2, 3, or 4
     // EFFECTS: prints out the selected operation from viewBeerList
     public static String printOperationView(int operation) {
-        String message = "";
-
         switch (operation) {
             case 1:
-                message = "[1] View default";
-                break;
+                return "[1] View default";
             case 2:
-                message = "[2] View sorted by name";
-                break;
+                return "[2] View sorted by name";
             case 3:
-                message = "[3] View sorted by rating";
-                break;
+                return  "[3] View sorted by rating";
             case 4:
-                message = "[4] Return";
-                break;
+                return "[4] Return";
             default: // do nothing
-                break;
+                return "";
         }
-        return message;
     }
 }

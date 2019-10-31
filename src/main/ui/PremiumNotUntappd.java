@@ -1,6 +1,7 @@
 package ui;
 
 import model.*;
+import model.exceptions.EmptyListException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import static model.Utility.*;
 
 public class PremiumNotUntappd extends NotUntappd {
     private PremiumBeerList beerList;
+    private StyleList styleList;
 
     PremiumNotUntappd() throws IOException {
         scanner = new Scanner(System.in);
@@ -28,6 +30,7 @@ public class PremiumNotUntappd extends NotUntappd {
         } else {
             System.out.println("Starting new instance of NotUntappd");
             beerList = new PremiumBeerList();
+            styleList = new StyleList();
         }
         processOperations();
     }
@@ -46,7 +49,9 @@ public class PremiumNotUntappd extends NotUntappd {
         scanner.nextLine();
         System.out.println("Please enter any comments or leave blank: ");
         String comments = scanner.nextLine();
-        beerList.addBeerEntry(new PremiumBeerEntry(name, brewery, style, rating, comments));
+        PremiumBeerEntry entry = new PremiumBeerEntry(name, brewery, style, rating, comments);
+        beerList.addBeerEntry(entry);
+        styleList.addPremiumBeerEntry(entry);
     }
 
     public void enterFileName() throws IOException {
@@ -187,6 +192,19 @@ public class PremiumNotUntappd extends NotUntappd {
                 break;
             default: // do nothing
                 break;
+        }
+    }
+
+    private void removeEntry() {
+        System.out.println("Please enter a beer name and its brewery to delete");
+        System.out.println("Please enter a beer name: ");
+        String name = scanner.nextLine();
+        System.out.println("Please enter its brewery: ");
+        String brewery = scanner.nextLine();
+        try {
+            beerList.removeBeerEntry(name,brewery);
+        } catch (EmptyListException e) {
+            System.out.println("Empty list");
         }
     }
 }

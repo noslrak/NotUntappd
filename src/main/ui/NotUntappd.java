@@ -3,6 +3,7 @@ package ui;
 import model.BeerEntry;
 import model.FreeBeerEntry;
 import model.Utility;
+import model.exceptions.EmptyListException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import static model.Utility.*;
 abstract class NotUntappd {
     // Initial functionality taken from B04 LoggingCalculator
     Scanner scanner;
-    Utility utility = new Utility();
 
     // EFFECTS: receives an operation choice and directs to operation
     void processOperations() throws IOException {
@@ -57,7 +57,7 @@ abstract class NotUntappd {
         }
     }
 
-    protected abstract void viewBeerList() throws EmptyListException;
+    protected abstract void viewBeerList() throws EmptyListException, EmptyListException;
 
     protected abstract void newBeerEntry();
 

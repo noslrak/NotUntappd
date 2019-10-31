@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class PremiumBeerList extends BeerList {
-    private ArrayList<PremiumBeerEntry> beerList = new ArrayList<>();
+    private ArrayList<PremiumBeerEntry> beerList;
 
     public PremiumBeerList() {
+        beerList = new ArrayList<>();
     }
 
     public void addBeerEntry(PremiumBeerEntry beerEntry) {
@@ -122,12 +123,12 @@ public class PremiumBeerList extends BeerList {
         return styleList;
     }
 
-    public void removeByName(String name) throws EmptyListException {
+    public void removeBeerEntry(String name, String brewery) throws EmptyListException {
         if (beerList.isEmpty()) {
             throw new EmptyListException();
         } else {
             for (PremiumBeerEntry beerEntry : beerList) {
-                if (beerEntry.getBeerName().equals(name)) {
+                if (beerEntry.getBeerName().equals(name) && beerEntry.getBrewery().equals(brewery)) {
                     beerList.remove(beerEntry);
                 }
             }
@@ -144,6 +145,7 @@ public class PremiumBeerList extends BeerList {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void loadFile(String name) throws IOException {
         ArrayList<PremiumBeerEntry> loadList = new ArrayList<>();
         ObjectInputStream in = null;
@@ -164,5 +166,9 @@ public class PremiumBeerList extends BeerList {
             }
         }
         beerList = loadList;
+    }
+
+    public boolean contains(PremiumBeerEntry beerEntry) {
+        return beerList.contains(beerEntry);
     }
 }

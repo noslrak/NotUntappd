@@ -3,7 +3,7 @@ package ui;
 import model.BeerEntry;
 import model.FreeBeerEntry;
 import model.FreeBeerList;
-import model.exceptions.MaxSizeException;
+import model.exceptions.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
