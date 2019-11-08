@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public abstract class BeerEntry implements Serializable {
     protected static final long serialVersionUID = 1L;
@@ -61,5 +62,22 @@ public abstract class BeerEntry implements Serializable {
     public String toString() {
         return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Rating: " + format.format(beerRating)
                 + " " + "Comments: " + beerComments;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BeerEntry beerEntry = (BeerEntry) o;
+        return beerName.equals(beerEntry.beerName) && breweryName.equals(beerEntry.breweryName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(beerName, breweryName);
     }
 }

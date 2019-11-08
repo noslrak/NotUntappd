@@ -8,7 +8,7 @@ import java.util.Comparator;
 
 public class FreeBeerList extends BeerList {
     private ArrayList<FreeBeerEntry> beerList;
-    public static final int maxEntry = 50;
+    static final int maxEntry = 50;
 
     public FreeBeerList() {
         beerList = new ArrayList<>();
@@ -54,7 +54,7 @@ public class FreeBeerList extends BeerList {
 
     // REQUIRES: beerList is not empty
     // MODIFIES: this
-    // EFFECTS: takes in a name of a brewery and a beerList, filters out beers from the brewery
+    // EFFECTS: takes in a name of a brewery filters out beers from the brewery
     public ArrayList<FreeBeerEntry> searchBrewery(String brewery) {
         ArrayList<FreeBeerEntry> foundList = new ArrayList<>();
 
@@ -69,7 +69,7 @@ public class FreeBeerList extends BeerList {
 
     // REQUIRES: beerList is not empty
     // MODIFIES: this
-    // EFFECTS: takes in a rating x and a beerList and produces a new list of beers with rating >= x
+    // EFFECTS: takes in a rating x and produces a new list of beers with rating >= x
     public ArrayList<FreeBeerEntry> searchRating(double rating) {
         ArrayList<FreeBeerEntry> ratingList = new ArrayList<>();
 

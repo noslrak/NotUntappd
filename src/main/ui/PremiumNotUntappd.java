@@ -11,7 +11,6 @@ import static model.Utility.*;
 
 public class PremiumNotUntappd extends NotUntappd {
     private PremiumBeerList beerList;
-    private StyleList styleList;
 
     PremiumNotUntappd() throws IOException {
         scanner = new Scanner(System.in);
@@ -30,7 +29,6 @@ public class PremiumNotUntappd extends NotUntappd {
         } else {
             System.out.println("Starting new instance of NotUntappd");
             beerList = new PremiumBeerList();
-            styleList = new StyleList();
         }
         processOperations();
     }
@@ -51,7 +49,6 @@ public class PremiumNotUntappd extends NotUntappd {
         String comments = scanner.nextLine();
         PremiumBeerEntry entry = new PremiumBeerEntry(name, brewery, style, rating, comments);
         beerList.addBeerEntry(entry);
-        styleList.addPremiumBeerEntry(entry);
     }
 
     public void enterFileName() throws IOException {
