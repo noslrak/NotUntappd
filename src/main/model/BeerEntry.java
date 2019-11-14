@@ -14,7 +14,7 @@ public abstract class BeerEntry implements Serializable {
     // Setters
     // MODIFIES: this
     // EFFECTS: changes beerName to inputted name
-    public void setBeerName(String name) {
+    void setBeerName(String name) {
         this.beerName = name;
     }
 
@@ -26,19 +26,19 @@ public abstract class BeerEntry implements Serializable {
 
     // MODIFIES: this
     // EFFECTS: changes beerRating to inputted rating
-    public void setBeerRating(double rate) {
+    void setBeerRating(double rate) {
         this.beerRating = rate;
     }
 
     // MODIFIES: this
     // EFFECTS: changes comments to inputted comment
-    public void setBeerComments(String comm) {
+    void setBeerComments(String comm) {
         this.beerComments = comm;
     }
 
     // Getters
     // EFFECTS: returns the beer name
-    public String getBeerName() {
+    String getBeerName() {
         return beerName;
     }
 
@@ -48,12 +48,12 @@ public abstract class BeerEntry implements Serializable {
     }
 
     // EFFECTS: returns the beer rating
-    public double getBeerRating() {
+    double getBeerRating() {
         return beerRating;
     }
 
     // EFFECTS: returns the beer comment
-    public String getBeerComments() {
+    String getBeerComments() {
         return beerComments;
     }
 
@@ -62,22 +62,5 @@ public abstract class BeerEntry implements Serializable {
     public String toString() {
         return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Rating: " + format.format(beerRating)
                 + " " + "Comments: " + beerComments;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        BeerEntry beerEntry = (BeerEntry) o;
-        return beerName.equals(beerEntry.beerName) && breweryName.equals(beerEntry.breweryName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(beerName, breweryName);
     }
 }
