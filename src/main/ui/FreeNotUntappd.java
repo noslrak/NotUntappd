@@ -14,7 +14,7 @@ import static model.Utility.*;
 class FreeNotUntappd extends NotUntappd {
     private FreeBeerList beerList;
 
-    FreeNotUntappd() throws IOException {
+    FreeNotUntappd() throws IOException, ClassNotFoundException {
         scanner = new Scanner(System.in);
         int operation;
         String fileName;

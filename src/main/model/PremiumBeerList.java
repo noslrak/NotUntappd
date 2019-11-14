@@ -153,25 +153,14 @@ public class PremiumBeerList extends BeerList {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void loadFile(String name) throws IOException {
-        ArrayList<PremiumBeerEntry> loadList = new ArrayList<>();
-        ObjectInputStream in = null;
-        boolean fileFound = true;
+    public void loadFile(String name) throws IOException, ClassNotFoundException {
+        ArrayList<PremiumBeerEntry> loadList;
+        ObjectInputStream in;
 
-        try {
-            in = new ObjectInputStream(new FileInputStream(name + ".txt"));
-            loadList = (ArrayList<PremiumBeerEntry>) in.readObject();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-            fileFound = false;
-        } catch (ClassNotFoundException e) {
-            System.out.println("Exception: class not found");
-        } finally {
-            if (fileFound) {
-                assert in != null;
-                in.close();
-            }
-        }
+        in = new ObjectInputStream(new FileInputStream(name + ".txt"));
+        loadList = (ArrayList<PremiumBeerEntry>) in.readObject();
+
         beerList = loadList;
+        in.close();
     }
 }

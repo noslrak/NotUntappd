@@ -127,7 +127,7 @@ class PremiumBeerListTest {
     }
 
     @Test
-    void testLoad() throws IOException {
+    void testLoad() throws IOException, ClassNotFoundException {
         FileOutputStream fileOut = new FileOutputStream(new File("testLoad.txt"));
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(beerList.getList());
@@ -163,6 +163,56 @@ class PremiumBeerListTest {
     void testRemoveByName() {
         try {
             beerList.removeBeerEntry("Noa", "Omnipollo");
+            testList.addBeerEntry(operis);
+            testList.addBeerEntry(magic);
+            String beerString = beerList.getList().toString();
+            String testString = testList.getList().toString();
+            assertEquals(beerString, testString);
+        } catch (EmptyListException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void testRemoveByNameWrongEverything() {
+        try {
+            beerList.removeBeerEntry("Jock Jams", "Twin Sails Brewing");
+            testList.addBeerEntry(operis);
+            testList.addBeerEntry(noa);
+            testList.addBeerEntry(magic);
+            String beerString = beerList.getList().toString();
+            String testString = testList.getList().toString();
+            assertEquals(beerString, testString);
+        } catch (EmptyListException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void testRemoveByNameWrongName() {
+        try {
+            beerList.removeBeerEntry("Jock Jams", "Omnipollo");
+            testList.addBeerEntry(operis);
+            testList.addBeerEntry(noa);
+            testList.addBeerEntry(magic);
+            String beerString = beerList.getList().toString();
+            String testString = testList.getList().toString();
+            assertEquals(beerString, testString);
+        } catch (EmptyListException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void testRemoveByNameWrongBrewery() {
+        try {
+            beerList.removeBeerEntry("Noa", "Twin Sails Brewing");
+            testList.addBeerEntry(operis);
+            testList.addBeerEntry(noa);
+            testList.addBeerEntry(magic);
+            String beerString = beerList.getList().toString();
+            String testString = testList.getList().toString();
+            assertEquals(beerString, testString);
         } catch (EmptyListException e) {
             fail();
         }

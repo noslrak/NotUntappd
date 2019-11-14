@@ -8,7 +8,7 @@ import static network.ReadWebPage.welcomeMessage;
 public class Main {
     private static String password = "idontremember";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
         int operation;
         String code;

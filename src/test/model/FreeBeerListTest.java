@@ -141,7 +141,7 @@ class FreeBeerListTest {
     }
 
     @Test
-    void testLoad() throws IOException {
+    void testLoad() throws IOException, ClassNotFoundException {
         FileOutputStream fileOut = new FileOutputStream(new File("testLoad.txt"));
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(beerList.getList());

@@ -12,7 +12,7 @@ import static model.Utility.*;
 public class PremiumNotUntappd extends NotUntappd {
     private PremiumBeerList beerList;
 
-    PremiumNotUntappd() throws IOException {
+    PremiumNotUntappd() throws IOException, ClassNotFoundException {
         scanner = new Scanner(System.in);
         int operation;
         String fileName;

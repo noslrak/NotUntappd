@@ -124,25 +124,13 @@ public class FreeBeerList extends BeerList {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void loadFile(String name) throws IOException {
-        ArrayList<FreeBeerEntry> loadList = new ArrayList<>();
-        ObjectInputStream in = null;
-        boolean fileFound = true;
+    public void loadFile(String name) throws IOException, ClassNotFoundException {
+        ArrayList<FreeBeerEntry> loadList;
+        ObjectInputStream in;
 
-        try {
-            in = new ObjectInputStream(new FileInputStream(name + ".txt"));
-            loadList = (ArrayList<FreeBeerEntry>) in.readObject();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-            fileFound = false;
-        } catch (ClassNotFoundException e) {
-            System.out.println("ClassNotFoundException");
-        } finally {
-            if (fileFound) {
-                assert in != null;
-                in.close();
-            }
-        }
+        in = new ObjectInputStream(new FileInputStream(name + ".txt"));
+        loadList = (ArrayList<FreeBeerEntry>) in.readObject();
         beerList = loadList;
+        in.close();
     }
 }
