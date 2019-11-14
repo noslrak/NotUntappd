@@ -10,15 +10,22 @@ public class PremiumBeerList extends BeerList {
     private ArrayList<PremiumBeerEntry> beerList;
 
     public PremiumBeerList() {
+        super();
         beerList = new ArrayList<>();
     }
 
     public void addBeerEntry(PremiumBeerEntry beerEntry) {
         beerList.add(beerEntry);
+        setChanged();
+        notifyObservers();
     }
 
     public boolean isEmpty() {
         return beerList.isEmpty();
+    }
+
+    public PremiumBeerEntry getLast() {
+        return beerList.get(beerList.size() - 1);
     }
 
     // EFFECTS: prints out a given list of beerEntry
@@ -29,13 +36,13 @@ public class PremiumBeerList extends BeerList {
     }
 
     // EFFECTS: prints out a given list of beerEntry
-    public void printList() {
+    void printList() {
         for (PremiumBeerEntry beerEntry : beerList) {
             System.out.println(beerEntry);
         }
     }
 
-    public ArrayList<PremiumBeerEntry> getList() {
+    ArrayList<PremiumBeerEntry> getList() {
         return beerList;
     }
 

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PremiumBeerListTest {
     private PremiumBeerList beerList;
@@ -75,8 +74,8 @@ class PremiumBeerListTest {
         System.setOut(ps);
 
         beerList.printList();
-        assertEquals("Beer: Operis Brewery: Four Winds Style: Sour Rating: 4.20 Comments: \n"
-                + "Beer: Noa Brewery: Omnipollo Style: Stout Rating: 4.40 Comments: Test\nBeer: Magic Lambic Brewery: "
+        assertEquals("Beer: Operis Brewery: Four Winds Style: Sour Rating: 4.20 Comments: \r\n"
+                + "Beer: Noa Brewery: Omnipollo Style: Stout Rating: 4.40 Comments: Test\r\nBeer: Magic Lambic Brewery: "
                 + "Cantillion Style: Lambic Rating: 4.75 Comments:", os.toString().trim());
         PrintStream originalOut = System.out;
         System.setOut(originalOut);
@@ -89,9 +88,9 @@ class PremiumBeerListTest {
         System.setOut(ps);
 
         beerList.noSort();
-        assertEquals("Default view: \n"
-                + "Beer: Operis Brewery: Four Winds Style: Sour Rating: 4.20 Comments: \nBeer: Noa Brewery: "
-                + "Omnipollo Style: Stout Rating: 4.40 Comments: Test\nBeer: Magic Lambic Brewery: Cantillion "
+        assertEquals("Default view: \r\n"
+                + "Beer: Operis Brewery: Four Winds Style: Sour Rating: 4.20 Comments: \r\nBeer: Noa Brewery: "
+                + "Omnipollo Style: Stout Rating: 4.40 Comments: Test\r\nBeer: Magic Lambic Brewery: Cantillion "
                 + "Style: Lambic Rating: 4.75 Comments:", os.toString().trim());
         PrintStream originalOut = System.out;
         System.setOut(originalOut);
@@ -104,9 +103,9 @@ class PremiumBeerListTest {
         System.setOut(ps);
 
         beerList.sortByName();
-        assertEquals("Sorted by name: \n"
-                + "Beer: Magic Lambic Brewery: Cantillion Style: Lambic Rating: 4.75 Comments: \n"
-                + "Beer: Noa Brewery: Omnipollo Style: Stout Rating: 4.40 Comments: Test\n"
+        assertEquals("Sorted by name: \r\n"
+                + "Beer: Magic Lambic Brewery: Cantillion Style: Lambic Rating: 4.75 Comments: \r\n"
+                + "Beer: Noa Brewery: Omnipollo Style: Stout Rating: 4.40 Comments: Test\r\n"
                 + "Beer: Operis Brewery: Four Winds Style: Sour Rating: 4.20 Comments:", os.toString().trim());
         PrintStream originalOut = System.out;
         System.setOut(originalOut);
@@ -119,9 +118,9 @@ class PremiumBeerListTest {
         System.setOut(ps);
 
         beerList.sortByRating();
-        assertEquals("Sorted by rating: \n"
-                + "Beer: Magic Lambic Brewery: Cantillion Style: Lambic Rating: 4.75 Comments: \n"
-                + "Beer: Noa Brewery: Omnipollo Style: Stout Rating: 4.40 Comments: Test\n"
+        assertEquals("Sorted by rating: \r\n"
+                + "Beer: Magic Lambic Brewery: Cantillion Style: Lambic Rating: 4.75 Comments: \r\n"
+                + "Beer: Noa Brewery: Omnipollo Style: Stout Rating: 4.40 Comments: Test\r\n"
                 + "Beer: Operis Brewery: Four Winds Style: Sour Rating: 4.20 Comments:", os.toString().trim());
         PrintStream originalOut = System.out;
         System.setOut(originalOut);
@@ -167,6 +166,11 @@ class PremiumBeerListTest {
         } catch (EmptyListException e) {
             fail();
         }
+    }
+
+    @Test
+    void testGetLast() {
+        assertEquals(magic, beerList.getLast());
     }
 }
 

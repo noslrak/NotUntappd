@@ -11,6 +11,7 @@ public class FreeBeerList extends BeerList {
     static final int maxEntry = 50;
 
     public FreeBeerList() {
+        super();
         beerList = new ArrayList<>();
     }
 
@@ -19,19 +20,25 @@ public class FreeBeerList extends BeerList {
             throw new MaxSizeException();
         } else {
             beerList.add(beerEntry);
+            setChanged();
+            notifyObservers();
         }
+    }
+
+    public FreeBeerEntry getLast() {
+        return beerList.get(beerList.size() - 1);
     }
 
     public boolean isEmpty() {
         return beerList.isEmpty();
     }
 
-    public ArrayList<FreeBeerEntry> getList() {
+    ArrayList<FreeBeerEntry> getList() {
         return beerList;
     }
 
     // EFFECTS: prints out a given list of beerEntry
-    public void printList() {
+    void printList() {
         for (FreeBeerEntry beerEntry : beerList) {
             System.out.println(beerEntry);
         }
