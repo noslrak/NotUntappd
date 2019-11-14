@@ -2,6 +2,7 @@ package ui;
 
 import model.*;
 import model.exceptions.EmptyListException;
+import model.exceptions.NotFoundException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class PremiumNotUntappd extends NotUntappd {
         beerList.addBeerEntry(entry);
     }
 
+    // EFFECTS: allows input of a file name to be saved
     public void enterFileName() throws IOException {
         String fileName;
 
@@ -101,6 +103,7 @@ public class PremiumNotUntappd extends NotUntappd {
         }
     }
 
+    // EFFECTS: allows searching of beers by beer style, returned alphabetically by beer name
     private void searchByStyle() {
         ArrayList<PremiumBeerEntry> styleList;
 
@@ -127,7 +130,7 @@ public class PremiumNotUntappd extends NotUntappd {
         }
     }
 
-    // EFFECTS: allows searching for a brewery name and produces a list of beers from the brewery
+    // EFFECTS: allows searching for a brewery name and produces a list of beers from the brewery by beer name
     public void findBrewery() {
         ArrayList<PremiumBeerEntry> foundList;
 
@@ -192,6 +195,7 @@ public class PremiumNotUntappd extends NotUntappd {
         }
     }
 
+    // EFFECTS: allows removal of a beer entry by inputting a beer name and its brewery
     private void removeEntry() {
         System.out.println("Please enter a beer name and its brewery to delete");
         System.out.println("Please enter a beer name: ");
@@ -202,6 +206,8 @@ public class PremiumNotUntappd extends NotUntappd {
             beerList.removeBeerEntry(name,brewery);
         } catch (EmptyListException e) {
             System.out.println("Empty list");
+        } catch (NotFoundException e) {
+            System.out.println("No such entry found");
         }
     }
 }

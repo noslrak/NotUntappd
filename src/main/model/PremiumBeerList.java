@@ -1,6 +1,7 @@
 package model;
 
 import model.exceptions.EmptyListException;
+import model.exceptions.NotFoundException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -130,15 +131,20 @@ public class PremiumBeerList extends BeerList {
         return styleList;
     }
 
-    public void removeBeerEntry(String name, String brewery) throws EmptyListException {
+    public void removeBeerEntry(String name, String brewery) throws EmptyListException, NotFoundException {
+        boolean found = false;
         if (beerList.isEmpty()) {
             throw new EmptyListException();
         } else {
             for (PremiumBeerEntry beerEntry : beerList) {
                 if (beerEntry.getBeerName().equals(name) && beerEntry.getBrewery().equals(brewery)) {
                     beerList.remove(beerEntry);
+                    found = true;
                 }
             }
+        }
+        if (!found) {
+            throw new NotFoundException();
         }
     }
 

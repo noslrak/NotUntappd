@@ -1,7 +1,9 @@
 package model;
 
 import model.exceptions.EmptyListException;
+import model.exceptions.NotFoundException;
 import org.junit.jupiter.api.*;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -168,54 +170,42 @@ class PremiumBeerListTest {
             String beerString = beerList.getList().toString();
             String testString = testList.getList().toString();
             assertEquals(beerString, testString);
-        } catch (EmptyListException e) {
+        } catch (EmptyListException | NotFoundException e) {
             fail();
         }
     }
 
     @Test
     void testRemoveByNameWrongEverything() {
-        try {
-            beerList.removeBeerEntry("Jock Jams", "Twin Sails Brewing");
-            testList.addBeerEntry(operis);
-            testList.addBeerEntry(noa);
-            testList.addBeerEntry(magic);
-            String beerString = beerList.getList().toString();
-            String testString = testList.getList().toString();
-            assertEquals(beerString, testString);
-        } catch (EmptyListException e) {
-            fail();
-        }
+        assertThrows(NotFoundException.class, () -> beerList.removeBeerEntry("Jock Jams", "Twin Sails Brewing"));
+        testList.addBeerEntry(operis);
+        testList.addBeerEntry(noa);
+        testList.addBeerEntry(magic);
+        String beerString = beerList.getList().toString();
+        String testString = testList.getList().toString();
+        assertEquals(beerString, testString);
     }
 
     @Test
     void testRemoveByNameWrongName() {
-        try {
-            beerList.removeBeerEntry("Jock Jams", "Omnipollo");
-            testList.addBeerEntry(operis);
-            testList.addBeerEntry(noa);
-            testList.addBeerEntry(magic);
-            String beerString = beerList.getList().toString();
-            String testString = testList.getList().toString();
-            assertEquals(beerString, testString);
-        } catch (EmptyListException e) {
-            fail();
-        }
+        assertThrows(NotFoundException.class, () -> beerList.removeBeerEntry("Jock Jams", "Omnipollo"));
+        testList.addBeerEntry(operis);
+        testList.addBeerEntry(noa);
+        testList.addBeerEntry(magic);
+        String beerString = beerList.getList().toString();
+        String testString = testList.getList().toString();
+        assertEquals(beerString, testString);
     }
 
     @Test
     void testRemoveByNameWrongBrewery() {
-        try {
-            beerList.removeBeerEntry("Noa", "Twin Sails Brewing");
-            testList.addBeerEntry(operis);
-            testList.addBeerEntry(noa);
-            testList.addBeerEntry(magic);
-            String beerString = beerList.getList().toString();
-            String testString = testList.getList().toString();
-            assertEquals(beerString, testString);
-        } catch (EmptyListException e) {
-            fail();
-        }
+        assertThrows(NotFoundException.class, () -> beerList.removeBeerEntry("Noa", "Twin Sails Brewing"));
+        testList.addBeerEntry(operis);
+        testList.addBeerEntry(noa);
+        testList.addBeerEntry(magic);
+        String beerString = beerList.getList().toString();
+        String testString = testList.getList().toString();
+        assertEquals(beerString, testString);
     }
 
     @Test
