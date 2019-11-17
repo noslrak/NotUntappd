@@ -1,9 +1,5 @@
 package model;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-
 public final class Utility {
 
     public static boolean loadPrevious(int operation) {
