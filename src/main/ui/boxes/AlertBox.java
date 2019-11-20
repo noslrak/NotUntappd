@@ -8,6 +8,7 @@ import javafx.scene.*;
 import javafx.geometry.*;
 
 public class AlertBox {
+    // EFFECTS: displays a generic alert box with a given title and message
     public static void display(String title, String message) {
         Stage window = new Stage();
 

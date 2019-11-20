@@ -25,6 +25,7 @@ public class PremiumBeerEntry extends BeerEntry {
         return beerStyle;
     }
 
+    // EFFECTS: proper print output of PremiumBeerEntry
     @Override
     public String toString() {
         return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Style: " + beerStyle + " Rating: "

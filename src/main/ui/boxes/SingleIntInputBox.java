@@ -13,6 +13,7 @@ public class SingleIntInputBox {
     private static TextField fileNameInput = new TextField();
     private static Stage window = new Stage();
 
+    // EFFECTS: displays a generic Int input box with given title and message
     public static double display(String title, String message) {
         // Blocks events to other windows
         window.initModality(Modality.APPLICATION_MODAL);

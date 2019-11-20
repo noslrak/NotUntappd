@@ -9,5 +9,6 @@ abstract class BeerList extends Observable implements Loadable, Savable {
 
     abstract BeerEntry getLast();
 
+    abstract int getSize();
 
 }

@@ -27,6 +27,7 @@ public class FreeEntryBox {
     private FreeBeerList list = new FreeBeerList();
     private Stage window = new Stage();
 
+    // EFFECTS: display an EntryBox for FreeBeerEntry
     public FreeBeerList display(String title, String message, FreeBeerList list) {
         label = new Label(message);
         this.list = list;

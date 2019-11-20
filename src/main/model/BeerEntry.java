@@ -60,7 +60,7 @@ public abstract class BeerEntry implements Serializable {
     // EFFECTS: sets decimal format
     DecimalFormat format = new DecimalFormat("##.00");
 
-    // EFFECTS: proper output of BeerEntry
+    // EFFECTS: proper print output of BeerEntry
     public String toString() {
         return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Rating: " + format.format(beerRating)
                 + " " + "Comments: " + beerComments;

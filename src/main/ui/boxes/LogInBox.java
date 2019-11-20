@@ -16,6 +16,7 @@ public class LogInBox {
     private static TextField userInput = new TextField();
     private static PasswordField passwordInput = new PasswordField();
 
+    // EFFECTS: displays a box to submit login credentials with given title and message
     public static boolean display(String title, String message) {
         // Blocks events to other windows
         window.initModality(Modality.APPLICATION_MODAL);

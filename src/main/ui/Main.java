@@ -24,6 +24,7 @@ public class Main extends Application {
         launch(args);
     }
 
+    // EFFECTS: sets up application window
     @Override
     public void start(Stage primaryStage) {
         window = primaryStage;

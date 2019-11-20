@@ -26,6 +26,7 @@ public class RemoveBox {
     private static ArrayList<String> returnList = new ArrayList<>();
     private static Stage window = new Stage();
 
+    // EFFECTS: display an box for inputting of beer details for removal
     public static ArrayList<String> display(String title, String message) {
         label = new Label(message);
 

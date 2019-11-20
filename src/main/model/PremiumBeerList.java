@@ -15,22 +15,33 @@ public class PremiumBeerList extends BeerList {
         beerList = new ArrayList<>();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds PremiumBeerEntry to beerList and notifies observer
     public void addBeerEntry(PremiumBeerEntry beerEntry) {
         beerList.add(beerEntry);
         setChanged();
         notifyObservers();
     }
 
+    // EFFECTS: returns true is PremiumBeerEntry is already in beerList
     public boolean contains(PremiumBeerEntry beerEntry) {
         return beerList.contains(beerEntry);
     }
 
+    // EFFECTS: returns true if beerList is empty
     boolean isEmpty() {
         return beerList.isEmpty();
     }
 
+    // EFFECTS: returns the last PremiumBeerEntry in beerList
     public PremiumBeerEntry getLast() {
         return beerList.get(beerList.size() - 1);
+    }
+
+    // EFFECTS: returns the size of beerList
+    @Override
+    int getSize() {
+        return beerList.size();
     }
 
     // EFFECTS: prints out a given list of beerEntry
@@ -47,6 +58,7 @@ public class PremiumBeerList extends BeerList {
         }
     }
 
+    // EFFECTS: returns beerList
     ArrayList<PremiumBeerEntry> getList() {
         return beerList;
     }
@@ -158,6 +170,8 @@ public class PremiumBeerList extends BeerList {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves beerList as file with given String name
     @Override
     public void saveFile(String name) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(new File(name + ".txt"));
@@ -167,6 +181,8 @@ public class PremiumBeerList extends BeerList {
         fileOut.close();
     }
 
+    // MODIFIES: this
+    // EFFECTS: attempts to load a beerList from a file with given String name
     @Override
     @SuppressWarnings("unchecked")
     public void loadFile(String name) throws IOException, ClassNotFoundException {

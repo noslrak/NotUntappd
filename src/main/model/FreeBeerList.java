@@ -12,11 +12,15 @@ public class FreeBeerList extends BeerList {
     private ArrayList<FreeBeerEntry> beerList;
     static final int maxEntry = 50;
 
+    // Constructor
     public FreeBeerList() {
         super();
         beerList = new ArrayList<>();
     }
 
+    // REQUIRES: beerList has less than maxEntry entries
+    // MODIFIES: this
+    // EFFECTS: takes in a FreeBeerEntry and adds it to beerList, notifies observer on add
     public void addBeerEntry(FreeBeerEntry beerEntry) throws MaxSizeException {
         if (beerList.size() >= maxEntry) {
             throw new MaxSizeException();
@@ -27,18 +31,28 @@ public class FreeBeerList extends BeerList {
         }
     }
 
+    // EFFECTS: returns true if a given FreeBeerEntry is already in beerList
     public boolean contains(FreeBeerEntry beerEntry) {
         return beerList.contains(beerEntry);
     }
 
+    // EFFECTS: returns the last entry of beerList
     public FreeBeerEntry getLast() {
         return beerList.get(beerList.size() - 1);
     }
 
+    // EFFECTS: returns size of beerList
+    @Override
+    public int getSize() {
+        return beerList.size();
+    }
+
+    // EFFECTS: returns true if beerList is empty
     boolean isEmpty() {
         return beerList.isEmpty();
     }
 
+    // EFFECTS: returns beerList
     ArrayList<FreeBeerEntry> getList() {
         return beerList;
     }
@@ -126,6 +140,8 @@ public class FreeBeerList extends BeerList {
         printList();
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves beerList as file with given String name
     @Override
     public void saveFile(String name) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(new File(name + ".txt"));
@@ -135,6 +151,8 @@ public class FreeBeerList extends BeerList {
         fileOut.close();
     }
 
+    // MODIFIES: this
+    // EFFECTS: attempts to load a beerList from a file with given String name
     @Override
     @SuppressWarnings("unchecked")
     public void loadFile(String name) throws IOException, ClassNotFoundException {

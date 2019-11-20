@@ -28,6 +28,7 @@ public class PremiumEntryBox {
     private PremiumBeerList list;
     private Stage window = new Stage();
 
+    // EFFECTS: display an EntryBox for PremiumBeerEntry
     public PremiumBeerList display(String title, String message, PremiumBeerList list) {
         label = new Label(message);
         this.list = list;

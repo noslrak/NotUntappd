@@ -33,6 +33,7 @@ public class Menu {
     private Button clearButton = new Button("Clear");
     private Button returnButton = new Button("Return");
 
+    // Constructor
     public Menu() {
         VBox.setVgrow(spacer, Priority.ALWAYS);
         initializeButtons();
@@ -40,6 +41,8 @@ public class Menu {
         initializeBorderPane();
     }
 
+    // MODIFIES: this
+    // EFFECTS: generates a confirmation box for quitting with an option to save current progress
     public void quit() {
         boolean bool = ConfirmBox.display("", "Would you like to save before quitting?");
         if (bool) {
@@ -375,6 +378,8 @@ public class Menu {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: returns borderPane
     public BorderPane getBorderPane() {
         return borderPane;
     }
