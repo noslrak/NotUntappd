@@ -27,11 +27,15 @@ public class FreeBeerList extends BeerList {
         }
     }
 
+    public boolean contains(FreeBeerEntry beerEntry) {
+        return beerList.contains(beerEntry);
+    }
+
     public FreeBeerEntry getLast() {
         return beerList.get(beerList.size() - 1);
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return beerList.isEmpty();
     }
 
@@ -144,17 +148,20 @@ public class FreeBeerList extends BeerList {
     }
 
     public void removeBeerEntry(String name, String brewery) throws EmptyListException, NotFoundException {
+        ArrayList<FreeBeerEntry> removeList = new ArrayList<>();
+
         boolean found = false;
         if (beerList.isEmpty()) {
             throw new EmptyListException();
         } else {
             for (FreeBeerEntry beerEntry : beerList) {
                 if (beerEntry.getBeerName().equals(name) && beerEntry.getBrewery().equals(brewery)) {
-                    beerList.remove(beerEntry);
+                    removeList.add(beerEntry);
                     found = true;
                 }
             }
         }
+        beerList.removeAll(removeList);
         if (!found) {
             throw new NotFoundException();
         }

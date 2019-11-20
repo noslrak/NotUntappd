@@ -1,4 +1,4 @@
-package ui.gui;
+package ui.boxes;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
-import model.FreeBeerEntry;
 
 import java.util.ArrayList;
 

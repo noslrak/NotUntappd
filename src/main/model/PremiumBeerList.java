@@ -21,7 +21,11 @@ public class PremiumBeerList extends BeerList {
         notifyObservers();
     }
 
-    public boolean isEmpty() {
+    public boolean contains(PremiumBeerEntry beerEntry) {
+        return beerList.contains(beerEntry);
+    }
+
+    boolean isEmpty() {
         return beerList.isEmpty();
     }
 
@@ -118,7 +122,7 @@ public class PremiumBeerList extends BeerList {
 
     // REQUIRES: beerList is not empty
     // MODIFIES: this
-    // EFFECTS: takes in a beer style and a beerList and produces a new list of beers with the same style
+    // EFFECTS: takes in a beer style produces a new list of beers with the same style
     public ArrayList<PremiumBeerEntry> searchStyle(String style) {
         ArrayList<PremiumBeerEntry> styleList = new ArrayList<>();
 
@@ -131,18 +135,24 @@ public class PremiumBeerList extends BeerList {
         return styleList;
     }
 
+    // REQUIRES: beerList is not empty
+    // MODIFIES: this
+    // EFFECTS: takes in a beer name and brewery name and attempts to remove the entry
     public void removeBeerEntry(String name, String brewery) throws EmptyListException, NotFoundException {
+        ArrayList<PremiumBeerEntry> removeList = new ArrayList<>();
+
         boolean found = false;
         if (beerList.isEmpty()) {
             throw new EmptyListException();
         } else {
             for (PremiumBeerEntry beerEntry : beerList) {
                 if (beerEntry.getBeerName().equals(name) && beerEntry.getBrewery().equals(brewery)) {
-                    beerList.remove(beerEntry);
+                    removeList.add(beerEntry);
                     found = true;
                 }
             }
         }
+        beerList.removeAll(removeList);
         if (!found) {
             throw new NotFoundException();
         }

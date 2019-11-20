@@ -57,8 +57,10 @@ public abstract class BeerEntry implements Serializable {
         return beerComments;
     }
 
+    // EFFECTS: sets decimal format
     DecimalFormat format = new DecimalFormat("##.00");
 
+    // EFFECTS: proper output of BeerEntry
     public String toString() {
         return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Rating: " + format.format(beerRating)
                 + " " + "Comments: " + beerComments;

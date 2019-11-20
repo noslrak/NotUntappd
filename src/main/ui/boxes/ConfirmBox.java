@@ -1,4 +1,4 @@
-package ui.gui;
+package ui.boxes;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
