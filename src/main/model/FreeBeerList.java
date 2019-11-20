@@ -1,6 +1,8 @@
 package model;
 
+import model.exceptions.EmptyListException;
 import model.exceptions.MaxSizeException;
+import model.exceptions.NotFoundException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -40,6 +42,13 @@ public class FreeBeerList extends BeerList {
     // EFFECTS: prints out a given list of beerEntry
     void printList() {
         for (FreeBeerEntry beerEntry : beerList) {
+            System.out.println(beerEntry);
+        }
+    }
+
+    // EFFECTS: prints out a given list of beerEntry
+    public void printList(ArrayList<FreeBeerEntry> list) {
+        for (FreeBeerEntry beerEntry : list) {
             System.out.println(beerEntry);
         }
     }
@@ -132,5 +141,22 @@ public class FreeBeerList extends BeerList {
         loadList = (ArrayList<FreeBeerEntry>) in.readObject();
         beerList = loadList;
         in.close();
+    }
+
+    public void removeBeerEntry(String name, String brewery) throws EmptyListException, NotFoundException {
+        boolean found = false;
+        if (beerList.isEmpty()) {
+            throw new EmptyListException();
+        } else {
+            for (FreeBeerEntry beerEntry : beerList) {
+                if (beerEntry.getBeerName().equals(name) && beerEntry.getBrewery().equals(brewery)) {
+                    beerList.remove(beerEntry);
+                    found = true;
+                }
+            }
+        }
+        if (!found) {
+            throw new NotFoundException();
+        }
     }
 }

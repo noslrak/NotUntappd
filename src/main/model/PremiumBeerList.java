@@ -30,7 +30,7 @@ public class PremiumBeerList extends BeerList {
     }
 
     // EFFECTS: prints out a given list of beerEntry
-    private void printList(ArrayList<PremiumBeerEntry> list) {
+    public void printList(ArrayList<PremiumBeerEntry> list) {
         for (PremiumBeerEntry beerEntry : list) {
             System.out.println(beerEntry);
         }
