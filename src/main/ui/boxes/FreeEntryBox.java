@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
 import model.FreeBeerEntry;
 import model.FreeBeerList;
+import model.exceptions.DuplicateEntryException;
 import model.exceptions.MaxSizeException;
 
 public class FreeEntryBox extends EntryBox {
@@ -39,55 +40,51 @@ public class FreeEntryBox extends EntryBox {
     }
 
     private void initializeGrid() {
-        grid.setPadding(new Insets(10, 10,10,10));
+        grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(8);
         grid.setHgap(10);
     }
 
     private void setConstraints() {
-        GridPane.setConstraints(beerLabel,0,0);
-        GridPane.setConstraints(beerInput, 1,0);
-        GridPane.setConstraints(breweryLabel,0,1);
-        GridPane.setConstraints(breweryInput, 1,1);
-        GridPane.setConstraints(ratingLabel,0,2);
-        GridPane.setConstraints(ratingInput,1,2);
-        GridPane.setConstraints(commentLabel,0,3);
-        GridPane.setConstraints(commentInput,1,3);
-        GridPane.setConstraints(submit,1,4);
-        GridPane.setConstraints(label,0,6,2,2);
+        GridPane.setConstraints(beerLabel, 0, 0);
+        GridPane.setConstraints(beerInput, 1, 0);
+        GridPane.setConstraints(breweryLabel, 0, 1);
+        GridPane.setConstraints(breweryInput, 1, 1);
+        GridPane.setConstraints(ratingLabel, 0, 2);
+        GridPane.setConstraints(ratingInput, 1, 2);
+        GridPane.setConstraints(commentLabel, 0, 3);
+        GridPane.setConstraints(commentInput, 1, 3);
+        GridPane.setConstraints(submit, 1, 4);
+        GridPane.setConstraints(label, 0, 6, 2, 2);
     }
 
     private void checkAndSubmit() {
         double rating = 0.0;
 
-        while (bool) {
-            try {
-                rating = Double.parseDouble(ratingInput.getText());
-                bool = false;
-            } catch (Exception e) {
-                AlertBox.display("Invalid Rating", "Please input a valid rating");
-            }
-            if (beerInput.getText().equals("") | breweryInput.getText().equals("")) {
-                AlertBox.display("Missing Information", "Please enter the missing information");
-            } else if (rating < 0.0 || rating > 5.0) {
-                AlertBox.display("Invalid Rating", "Please input a valid rating");
-            } else {
-                FreeBeerEntry entry = new FreeBeerEntry(beerInput.getText(), breweryInput.getText(), rating,
-                        commentInput.getText());
-                attemptAdd(entry);
-            }
+        try {
+            rating = Double.parseDouble(ratingInput.getText());
+            valid = true;
+        } catch (Exception e) {
+            AlertBox.display("Invalid Rating", "Please input a valid rating");
+        }
+        if (beerInput.getText().equals("") | breweryInput.getText().equals("")) {
+            AlertBox.display("Missing Information", "Please enter the missing information");
+        } else if (rating < 0.0 || rating > 5.0) {
+            AlertBox.display("Invalid Rating", "Please input a valid rating");
+        } else if (valid) {
+            FreeBeerEntry entry = new FreeBeerEntry(beerInput.getText(), breweryInput.getText(), rating,
+                    commentInput.getText());
+            attemptAdd(entry);
         }
     }
 
     private void attemptAdd(FreeBeerEntry entry) {
-        if (!list.contains(entry)) {
-            try {
-                list.addBeerEntry(entry);
-                window.close();
-            } catch (MaxSizeException e) {
-                AlertBox.display("Max Entries Reached", "Please use Premium version for unlimited entries");
-            }
-        } else {
+        try {
+            list.addBeerEntry(entry);
+            window.close();
+        } catch (MaxSizeException e) {
+            AlertBox.display("Max Entries Reached", "Please use Premium version for unlimited entries");
+        } catch (DuplicateEntryException e) {
             AlertBox.display("Duplicate Entry", "This entry has already been recorded");
         }
     }

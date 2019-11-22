@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.DuplicateEntryException;
 import model.exceptions.EmptyListException;
 import model.exceptions.NotFoundException;
 
@@ -17,14 +18,19 @@ public class PremiumBeerList extends BeerList {
 
     // MODIFIES: this
     // EFFECTS: adds PremiumBeerEntry to beerList and notifies observer
-    public void addBeerEntry(PremiumBeerEntry beerEntry) {
-        beerList.add(beerEntry);
-        setChanged();
-        notifyObservers();
+    //          throws DuplicateEntryException if PremiumBeerEntry is already in beerList
+    public void addBeerEntry(PremiumBeerEntry beerEntry) throws DuplicateEntryException {
+        if (!beerList.contains(beerEntry)) {
+            beerList.add(beerEntry);
+            setChanged();
+            notifyObservers();
+        } else {
+            throw new DuplicateEntryException();
+        }
     }
 
     // EFFECTS: returns true is PremiumBeerEntry is already in beerList
-    public boolean contains(PremiumBeerEntry beerEntry) {
+    boolean contains(PremiumBeerEntry beerEntry) {
         return beerList.contains(beerEntry);
     }
 

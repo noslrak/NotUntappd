@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.DuplicateEntryException;
 import model.exceptions.EmptyListException;
 import model.exceptions.MaxSizeException;
 import model.exceptions.NotFoundException;
@@ -23,7 +24,7 @@ class FreeBeerListTest {
     private int rand;
 
     @BeforeEach
-    void runBefore() throws MaxSizeException {
+    void runBefore() throws MaxSizeException, DuplicateEntryException {
         beerList = new FreeBeerList();
         beerList.addBeerEntry(operis);
         beerList.addBeerEntry(noa);
@@ -33,7 +34,12 @@ class FreeBeerListTest {
     }
 
     @Test
-    void testMaxSizeExceptionFail() throws MaxSizeException {
+    void testDuplicateEntry() {
+        assertThrows(DuplicateEntryException.class, () -> beerList.addBeerEntry(operis));
+    }
+
+    @Test
+    void testMaxSizeExceptionFail() throws MaxSizeException, DuplicateEntryException {
         for (int i = 0; i < FreeBeerList.maxEntry; i++) {
             testList.addBeerEntry(magic);
         }
@@ -44,7 +50,7 @@ class FreeBeerListTest {
     void testMaxSizeExceptionPass() {
         try {
             beerList.addBeerEntry(magic);
-        } catch (MaxSizeException e) {
+        } catch (MaxSizeException | DuplicateEntryException e) {
             fail();
         }
     }
@@ -56,7 +62,7 @@ class FreeBeerListTest {
     }
 
     @Test
-    void testFindBeerName() throws MaxSizeException {
+    void testFindBeerName() throws MaxSizeException, DuplicateEntryException {
         FreeBeerEntry test = new FreeBeerEntry("Operis", "Test", 0, "");
         beerList.addBeerEntry(test);
         testList.addBeerEntry(operis);
@@ -67,7 +73,7 @@ class FreeBeerListTest {
     }
 
     @Test
-    void testSearchBrewery() throws MaxSizeException {
+    void testSearchBrewery() throws MaxSizeException, DuplicateEntryException {
         testList.addBeerEntry(magic);
 
         assertEquals(emptyList(), beerList.searchBrewery("Russian River Brewing"));
@@ -75,7 +81,7 @@ class FreeBeerListTest {
     }
 
     @Test
-    void testSearchRating() throws MaxSizeException {
+    void testSearchRating() throws MaxSizeException, DuplicateEntryException {
         testList.addBeerEntry(magic);
         testList.addBeerEntry(noa);
 
@@ -185,13 +191,13 @@ class FreeBeerListTest {
             String beerString = beerList.getList().toString();
             String testString = testList.getList().toString();
             assertEquals(beerString, testString);
-        } catch (EmptyListException | NotFoundException | MaxSizeException e) {
+        } catch (EmptyListException | NotFoundException | MaxSizeException | DuplicateEntryException e) {
             fail();
         }
     }
 
     @Test
-    void testRemoveByNameWrongEverything() throws MaxSizeException {
+    void testRemoveByNameWrongEverything() throws MaxSizeException, DuplicateEntryException {
         assertThrows(NotFoundException.class, () -> beerList.removeBeerEntry("Jock Jams", "Twin Sails Brewing"));
         testList.addBeerEntry(operis);
         testList.addBeerEntry(noa);
@@ -202,7 +208,7 @@ class FreeBeerListTest {
     }
 
     @Test
-    void testRemoveByNameWrongName() throws MaxSizeException {
+    void testRemoveByNameWrongName() throws MaxSizeException, DuplicateEntryException {
         assertThrows(NotFoundException.class, () -> beerList.removeBeerEntry("Jock Jams", "Omnipollo"));
         testList.addBeerEntry(operis);
         testList.addBeerEntry(noa);
@@ -213,7 +219,7 @@ class FreeBeerListTest {
     }
 
     @Test
-    void testRemoveByNameWrongBrewery() throws MaxSizeException {
+    void testRemoveByNameWrongBrewery() throws MaxSizeException, DuplicateEntryException {
         assertThrows(NotFoundException.class, () -> beerList.removeBeerEntry("Noa", "Twin Sails Brewing"));
         testList.addBeerEntry(operis);
         testList.addBeerEntry(noa);

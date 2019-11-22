@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.DuplicateEntryException;
 import model.exceptions.EmptyListException;
 import model.exceptions.NotFoundException;
 import org.junit.jupiter.api.*;
@@ -19,12 +20,17 @@ class PremiumBeerListTest {
     private PremiumBeerEntry magic = new PremiumBeerEntry("Magic Lambic", "Cantillion", "Lambic",  4.75, "");
 
     @BeforeEach
-    void runBefore() {
+    void runBefore() throws DuplicateEntryException {
         beerList = new PremiumBeerList();
         beerList.addBeerEntry(operis);
         beerList.addBeerEntry(noa);
         beerList.addBeerEntry(magic);
         testList = new PremiumBeerList();
+    }
+
+    @Test
+    void testDuplicateEntry() {
+        assertThrows(DuplicateEntryException.class, () -> beerList.addBeerEntry(operis));
     }
 
     @Test
@@ -34,7 +40,7 @@ class PremiumBeerListTest {
     }
 
     @Test
-    void testFindBeerName() {
+    void testFindBeerName() throws DuplicateEntryException {
         PremiumBeerEntry test = new PremiumBeerEntry("Operis", "Test", "Sour",0, "");
         beerList.addBeerEntry(test);
         testList.addBeerEntry(operis);
@@ -45,7 +51,7 @@ class PremiumBeerListTest {
     }
 
     @Test
-    void testSearchBrewery() {
+    void testSearchBrewery() throws DuplicateEntryException {
         testList.addBeerEntry(magic);
 
         assertEquals(emptyList(), beerList.searchBrewery("Russian River Brewing"));
@@ -53,7 +59,7 @@ class PremiumBeerListTest {
     }
 
     @Test
-    void testSearchRating() {
+    void testSearchRating() throws DuplicateEntryException {
         testList.addBeerEntry(magic);
         testList.addBeerEntry(noa);
 
@@ -62,7 +68,7 @@ class PremiumBeerListTest {
     }
 
     @Test
-    void testSearchStyle() {
+    void testSearchStyle() throws DuplicateEntryException {
         testList.addBeerEntry(magic);
 
         assertEquals(testList.getList(), beerList.searchStyle("Lambic"));
@@ -171,13 +177,13 @@ class PremiumBeerListTest {
             String beerString = beerList.getList().toString();
             String testString = testList.getList().toString();
             assertEquals(beerString, testString);
-        } catch (EmptyListException | NotFoundException e) {
+        } catch (EmptyListException | NotFoundException | DuplicateEntryException e) {
             fail();
         }
     }
 
     @Test
-    void testRemoveByNameWrongEverything() {
+    void testRemoveByNameWrongEverything() throws DuplicateEntryException {
         assertThrows(NotFoundException.class, () -> beerList.removeBeerEntry("Jock Jams", "Twin Sails Brewing"));
         testList.addBeerEntry(operis);
         testList.addBeerEntry(noa);
@@ -188,7 +194,7 @@ class PremiumBeerListTest {
     }
 
     @Test
-    void testRemoveByNameWrongName() {
+    void testRemoveByNameWrongName() throws DuplicateEntryException {
         assertThrows(NotFoundException.class, () -> beerList.removeBeerEntry("Jock Jams", "Omnipollo"));
         testList.addBeerEntry(operis);
         testList.addBeerEntry(noa);
@@ -199,7 +205,7 @@ class PremiumBeerListTest {
     }
 
     @Test
-    void testRemoveByNameWrongBrewery() {
+    void testRemoveByNameWrongBrewery() throws DuplicateEntryException {
         assertThrows(NotFoundException.class, () -> beerList.removeBeerEntry("Noa", "Twin Sails Brewing"));
         testList.addBeerEntry(operis);
         testList.addBeerEntry(noa);

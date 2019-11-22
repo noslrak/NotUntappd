@@ -23,5 +23,5 @@ public abstract class EntryBox {
     int minWidth = 250;
     int minHeight = 300;
     protected Stage window = new Stage();
-    boolean bool;
+    boolean valid = false;
 }

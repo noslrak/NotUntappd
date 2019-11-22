@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.DuplicateEntryException;
 import model.exceptions.EmptyListException;
 import model.exceptions.MaxSizeException;
 import model.exceptions.NotFoundException;
@@ -18,21 +19,23 @@ public class FreeBeerList extends BeerList {
         beerList = new ArrayList<>();
     }
 
-    // REQUIRES: beerList has less than maxEntry entries
+    // REQUIRES: beerList has less than maxEntry entries and beerList does not contain entry
     // MODIFIES: this
     // EFFECTS: takes in a FreeBeerEntry and adds it to beerList, notifies observer on add
-    public void addBeerEntry(FreeBeerEntry beerEntry) throws MaxSizeException {
+    public void addBeerEntry(FreeBeerEntry beerEntry) throws MaxSizeException, DuplicateEntryException {
         if (beerList.size() >= maxEntry) {
             throw new MaxSizeException();
-        } else {
+        } else if (!beerList.contains(beerEntry)) {
             beerList.add(beerEntry);
             setChanged();
             notifyObservers();
+        } else {
+            throw new DuplicateEntryException();
         }
     }
 
     // EFFECTS: returns true if a given FreeBeerEntry is already in beerList
-    public boolean contains(FreeBeerEntry beerEntry) {
+    boolean contains(FreeBeerEntry beerEntry) {
         return beerList.contains(beerEntry);
     }
 

@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.DuplicateEntryException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,14 +16,14 @@ class BeerListMonitorTest {
     private PremiumBeerEntry noa = new PremiumBeerEntry("Noa", "Omnipollo", "Stout",4.4, "Test");
 
     @BeforeEach
-    void runBefore() {
+    void runBefore() throws DuplicateEntryException {
         beerList = new PremiumBeerList();
         testList = new PremiumBeerList();
         testList.addBeerEntry(operis);
     }
 
     @Test
-    void testBeerListMonitorSingle() {
+    void testBeerListMonitorSingle() throws DuplicateEntryException {
         OutputStream os = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(os);
         System.setOut(ps);
@@ -35,7 +36,7 @@ class BeerListMonitorTest {
     }
 
     @Test
-    void testBeerListMonitorDouble() {
+    void testBeerListMonitorDouble() throws DuplicateEntryException {
         OutputStream os = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(os);
         System.setOut(ps);
