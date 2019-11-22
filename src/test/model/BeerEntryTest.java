@@ -79,10 +79,12 @@ class BeerEntryTest {
     @Test
     void testEqualsSymmetric() {
         PremiumBeerEntry one = new PremiumBeerEntry("Magic Lambic", "Cantillion", "Sour",4.2, "");
+        PremiumBeerEntry two = null;
         assertTrue(one.equals(magic) && magic.equals(one));
         assertEquals(one.hashCode(), magic.hashCode());
         assertFalse(noa.equals(magic) && magic.equals(noa));
         assertNotEquals(noa.hashCode(), magic.hashCode());
         assertNotEquals(one, null);
+        assertFalse(one.equals(two));
     }
 }
