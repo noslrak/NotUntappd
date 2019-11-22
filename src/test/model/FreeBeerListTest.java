@@ -41,7 +41,8 @@ class FreeBeerListTest {
     @Test
     void testMaxSizeExceptionFail() throws MaxSizeException, DuplicateEntryException {
         for (int i = 0; i < FreeBeerList.maxEntry; i++) {
-            testList.addBeerEntry(magic);
+            FreeBeerEntry entry = new FreeBeerEntry(Integer.toString(i), "Test", 4.3,"" );
+            testList.addBeerEntry(entry);
         }
         assertThrows(MaxSizeException.class, () -> testList.addBeerEntry(magic));
     }
@@ -49,7 +50,7 @@ class FreeBeerListTest {
     @Test
     void testMaxSizeExceptionPass() {
         try {
-            beerList.addBeerEntry(magic);
+            testList.addBeerEntry(magic);
         } catch (MaxSizeException | DuplicateEntryException e) {
             fail();
         }
