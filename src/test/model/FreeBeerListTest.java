@@ -248,5 +248,6 @@ class FreeBeerListTest {
         assertEquals(one.hashCode(), operis.hashCode());
         assertFalse(operis.equals(noa) && noa.equals(operis));
         assertNotEquals(operis.hashCode(), noa.hashCode());
+        assertFalse(equals(null));
     }
 }
