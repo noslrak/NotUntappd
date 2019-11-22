@@ -233,4 +233,13 @@ class FreeBeerListTest {
     void testEmptyListException() {
         assertThrows(EmptyListException.class, () -> testList.removeBeerEntry("Operis", "Four Winds"));
     }
+
+    @Test
+    void testEqualsSymmetric() {
+        FreeBeerEntry one = new FreeBeerEntry("Operis", "Four Winds", 4.2, "");
+        assertTrue(one.equals(operis) && operis.equals(one));
+        assertEquals(one.hashCode(), operis.hashCode());
+        assertFalse(operis.equals(noa) && noa.equals(operis));
+        assertNotEquals(operis.hashCode(), noa.hashCode());
+    }
 }
