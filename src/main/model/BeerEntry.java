@@ -65,4 +65,22 @@ public abstract class BeerEntry implements Serializable {
         return "Beer: " + beerName + " " + "Brewery: " + breweryName + " " + "Rating: " + format.format(beerRating)
                 + " " + "Comments: " + beerComments;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BeerEntry beerEntry = (BeerEntry) o;
+        return beerName.equals(beerEntry.beerName)
+                && breweryName.equals(beerEntry.breweryName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(beerName, breweryName);
+    }
 }

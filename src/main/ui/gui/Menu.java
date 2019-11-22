@@ -337,12 +337,12 @@ public class Menu {
         defaultButton.setOnAction(e -> defaultView());
         Button beerViewButton = new Button("View by Beer Name");
         beerViewButton.setMinWidth(buttonWidth);
-        defaultButton.setOnAction(e -> viewByBeer());
+        beerViewButton.setOnAction(e -> beerView());
         Button ratingViewButton = new Button("View by Rating");
         ratingViewButton.setMinWidth(buttonWidth);
         ratingViewButton.setOnAction(e -> ratingView());
-        vbox.getChildren().addAll(clearButton, loadButton,saveButton,defaultButton,beerViewButton,ratingViewButton,
-                spacer,returnButton,quitButton);
+        vbox.getChildren().addAll(clearButton, loadButton, saveButton, defaultButton, beerViewButton, ratingViewButton,
+                spacer, returnButton, quitButton);
         return vbox;
     }
 
@@ -351,14 +351,6 @@ public class Menu {
             premiumBeerList.noSort();
         } else {
             freeBeerList.noSort();
-        }
-    }
-
-    private void viewByBeer() {
-        if (premium) {
-            premiumBeerList.sortByName();
-        } else {
-            freeBeerList.sortByName();
         }
     }
 

@@ -112,24 +112,28 @@ public class PremiumBeerList extends BeerList {
     // EFFECTS: prints out beerList in default view
     public void noSort() {
         System.out.println("Default view: ");
-        printList(beerList);
+        printList();
     }
 
     // REQUIRES: beerList is not empty
     // EFFECTS: prints out beerList sorted by name
     public void sortByName() {
-        beerList.sort(Comparator.comparing(PremiumBeerEntry::getBeerName));
+        ArrayList<PremiumBeerEntry> toBeSorted = beerList;
+
+        toBeSorted.sort(Comparator.comparing(PremiumBeerEntry::getBeerName));
         System.out.println("Sorted by name: ");
-        printList(beerList);
+        printList(toBeSorted);
     }
 
     // REQUIRES: beerList is not empty
     // EFFECTS: prints out beerList sorted by rating, then by name is ratings are equal
     public void sortByRating() {
-        beerList.sort(Comparator.comparing(PremiumBeerEntry::getBeerRating).reversed()
+        ArrayList<PremiumBeerEntry> toBeSorted = beerList;
+
+        toBeSorted.sort(Comparator.comparing(PremiumBeerEntry::getBeerRating).reversed()
                 .thenComparing(PremiumBeerEntry::getBeerName));
         System.out.println("Sorted by rating: ");
-        printList(beerList);
+        printList(toBeSorted);
     }
 
     // REQUIRES: beerList is not empty

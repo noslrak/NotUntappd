@@ -12,20 +12,8 @@ import model.FreeBeerEntry;
 import model.FreeBeerList;
 import model.exceptions.MaxSizeException;
 
-public class FreeEntryBox {
-    private GridPane grid = new GridPane();
-    private Label beerLabel = new Label("Beer*:");
-    private TextField beerInput = new TextField();
-    private Label breweryLabel = new Label("Brewery*:");
-    private TextField breweryInput = new TextField();
-    private Label ratingLabel = new Label("Rating [0.0 - 5.0]");
-    private TextField ratingInput = new TextField();
-    private Label commentLabel = new Label("Comments:");
-    private TextField commentInput = new TextField();
-    private Button submit = new Button("Submit");
-    private Label label;
+public class FreeEntryBox extends EntryBox {
     private FreeBeerList list = new FreeBeerList();
-    private Stage window = new Stage();
 
     // EFFECTS: display an EntryBox for FreeBeerEntry
     public FreeBeerList display(String title, String message, FreeBeerList list) {
@@ -34,8 +22,8 @@ public class FreeEntryBox {
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
-        window.setMinWidth(300);
-        window.setMinHeight(350);
+        window.setMinWidth(minWidth);
+        window.setMinHeight(minHeight);
 
         initializeGrid();
         setConstraints();
@@ -71,19 +59,23 @@ public class FreeEntryBox {
 
     private void checkAndSubmit() {
         double rating = 0.0;
-        try {
-            rating = Double.parseDouble(ratingInput.getText());
-        } catch (Exception e) {
-            AlertBox.display("Invalid Rating", "Please input a valid rating");
-        }
-        if (beerInput.getText().equals("") | breweryInput.getText().equals("")) {
-            AlertBox.display("Missing Information", "Please enter the missing information");
-        } else if (rating < 0.0 || rating > 5.0) {
-            AlertBox.display("Invalid Rating", "Please input a valid rating");
-        } else {
-            FreeBeerEntry entry = new FreeBeerEntry(beerInput.getText(), breweryInput.getText(), rating,
-                    commentInput.getText());
-            attemptAdd(entry);
+
+        while (bool) {
+            try {
+                rating = Double.parseDouble(ratingInput.getText());
+                bool = false;
+            } catch (Exception e) {
+                AlertBox.display("Invalid Rating", "Please input a valid rating");
+            }
+            if (beerInput.getText().equals("") | breweryInput.getText().equals("")) {
+                AlertBox.display("Missing Information", "Please enter the missing information");
+            } else if (rating < 0.0 || rating > 5.0) {
+                AlertBox.display("Invalid Rating", "Please input a valid rating");
+            } else {
+                FreeBeerEntry entry = new FreeBeerEntry(beerInput.getText(), breweryInput.getText(), rating,
+                        commentInput.getText());
+                attemptAdd(entry);
+            }
         }
     }
 

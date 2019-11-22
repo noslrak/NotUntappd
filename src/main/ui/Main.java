@@ -38,7 +38,7 @@ public class Main extends Application {
         });
 
         BorderPane borderPane = menu.getBorderPane();
-        Scene scene = new Scene(borderPane, 600, 400);
+        Scene scene = new Scene(borderPane, 550, 400);
         window.setScene(scene);
         window.show();
         System.out.println("Please select Free or Premium version on the right");

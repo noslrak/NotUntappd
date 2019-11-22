@@ -126,18 +126,22 @@ public class FreeBeerList extends BeerList {
     // REQUIRES: beerList is not empty
     // EFFECTS: prints out beerList sorted by name
     public void sortByName() {
-        beerList.sort(Comparator.comparing(FreeBeerEntry::getBeerName));
+        ArrayList<FreeBeerEntry> toBeSorted = beerList;
+
+        toBeSorted.sort(Comparator.comparing(FreeBeerEntry::getBeerName));
         System.out.println("Sorted by name: ");
-        printList();
+        printList(toBeSorted);
     }
 
     // REQUIRES: beerList is not empty
     // EFFECTS: prints out beerList sorted by rating, then by name is ratings are equal
     public void sortByRating() {
-        beerList.sort(Comparator.comparing(FreeBeerEntry::getBeerRating).reversed()
+        ArrayList<FreeBeerEntry> toBeSorted = beerList;
+
+        toBeSorted.sort(Comparator.comparing(FreeBeerEntry::getBeerRating).reversed()
                 .thenComparing(FreeBeerEntry::getBeerName));
         System.out.println("Sorted by rating: ");
-        printList();
+        printList(toBeSorted);
     }
 
     // MODIFIES: this

@@ -11,22 +11,8 @@ import javafx.scene.layout.GridPane;
 import model.PremiumBeerEntry;
 import model.PremiumBeerList;
 
-public class PremiumEntryBox {
-    private GridPane grid = new GridPane();
-    private Label beerLabel = new Label("Beer*:");
-    private TextField beerInput = new TextField();
-    private Label breweryLabel = new Label("Brewery*:");
-    private TextField breweryInput = new TextField();
-    private Label styleLabel = new Label("Style: ");
-    private TextField styleInput = new TextField();
-    private Label ratingLabel = new Label("Rating [0.0 - 5.0]");
-    private TextField ratingInput = new TextField();
-    private Label commentLabel = new Label("Comments:");
-    private TextField commentInput = new TextField();
-    private Button submit = new Button("Submit");
-    private Label label;
+public class PremiumEntryBox  extends  EntryBox {
     private PremiumBeerList list;
-    private Stage window = new Stage();
 
     // EFFECTS: display an EntryBox for PremiumBeerEntry
     public PremiumBeerList display(String title, String message, PremiumBeerList list) {
@@ -35,8 +21,8 @@ public class PremiumEntryBox {
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
-        window.setMinWidth(300);
-        window.setMinHeight(350);
+        window.setMinWidth(minWidth);
+        window.setMinHeight(minHeight);
 
         initializeGrid();
         setConstraints();
@@ -74,19 +60,23 @@ public class PremiumEntryBox {
 
     private void checkAndSubmit() {
         double rating = 0.0;
-        try {
-            rating = Double.parseDouble(ratingInput.getText());
-        } catch (Exception e) {
-            AlertBox.display("Invalid Rating", "Please input a valid rating");
-        }
-        if (beerInput.getText().equals("") | breweryInput.getText().equals("")) {
-            AlertBox.display("Missing Information", "Please enter the missing information");
-        } else if (rating < 0.0 || rating > 5.0) {
-            AlertBox.display("Invalid Rating", "Please input a valid rating");
-        } else {
-            PremiumBeerEntry entry = new PremiumBeerEntry(beerInput.getText(), breweryInput.getText(),
-                    styleInput.getText(), rating, commentInput.getText());
-            attemptAdd(entry);
+
+        while (bool) {
+            try {
+                rating = Double.parseDouble(ratingInput.getText());
+            } catch (Exception e) {
+                bool = false;
+                AlertBox.display("Invalid Rating", "Please input a valid rating");
+            }
+            if (beerInput.getText().equals("") | breweryInput.getText().equals("")) {
+                AlertBox.display("Missing Information", "Please enter the missing information");
+            } else if (rating < 0.0 || rating > 5.0) {
+                AlertBox.display("Invalid Rating", "Please input a valid rating");
+            } else {
+                PremiumBeerEntry entry = new PremiumBeerEntry(beerInput.getText(), breweryInput.getText(),
+                        styleInput.getText(), rating, commentInput.getText());
+                attemptAdd(entry);
+            }
         }
     }
 
