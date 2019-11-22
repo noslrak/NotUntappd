@@ -225,15 +225,5 @@ class PremiumBeerListTest {
         assertTrue(beerList.contains(magic));
         assertFalse(testList.contains(magic));
     }
-
-    @Test
-    void testEqualsSymmetric() {
-        PremiumBeerEntry one = new PremiumBeerEntry("Operis", "Four Winds", "Sour",4.2, "");
-        assertTrue(one.equals(operis) && operis.equals(one));
-        assertEquals(one.hashCode(), operis.hashCode());
-        assertFalse(operis.equals(noa) && noa.equals(operis));
-        assertNotEquals(operis.hashCode(), noa.hashCode());
-        assertFalse(equals(null));
-    }
 }
 
