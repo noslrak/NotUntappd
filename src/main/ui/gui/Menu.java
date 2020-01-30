@@ -44,7 +44,8 @@ public class Menu {
     // MODIFIES: this
     // EFFECTS: generates a confirmation box for quitting with an option to save current progress
     public void quit() {
-        boolean bool = ConfirmBox.display("", "Would you like to save before quitting?");
+        ConfirmBox confirmBox = new ConfirmBox();
+        boolean bool = confirmBox.display("", "Would you like to save before quitting?");
         if (bool) {
             initializeSave();
             Main.window.close();
@@ -82,8 +83,10 @@ public class Menu {
     }
 
     private void initializeLoad() {
-        String fileName;
-        fileName = SingleInputBox.display("Load Previous NotUntappd", "Please enter file name");
+        SingleInputBox singleInputBox = new SingleInputBox();
+        AlertBox alertBox = new AlertBox();
+
+        String fileName = singleInputBox.display("Load Previous NotUntappd", "Please enter file name");
         try {
             if (premium) {
                 premiumBeerList = new PremiumBeerList();
@@ -93,15 +96,17 @@ public class Menu {
                 freeBeerList.loadFile(fileName);
             }
         } catch (IOException | ClassNotFoundException e) {
-            AlertBox.display("File Not Found", "Please enter a valid file name or start a new NotUntappd");
+            alertBox.display("File Not Found", "Please enter a valid file name or start a new NotUntappd");
         }
         System.out.println(fileName + " successfully loaded");
         borderPane.setRight(thirdRightMenu());
     }
 
     private void initializeSave() {
-        String fileName;
-        fileName = SingleInputBox.display("Save Current NotUntappd", "Please enter file name");
+        SingleInputBox singleInputBox = new SingleInputBox();
+        AlertBox alertBox = new AlertBox();
+
+        String fileName = singleInputBox.display("Save Current NotUntappd", "Please enter file name");
         if (premiumBeerList != null && freeBeerList != null) {
             try {
                 if (premium) {
@@ -113,7 +118,7 @@ public class Menu {
                 e.printStackTrace();
             }
         } else {
-            AlertBox.display("No Instance Found", "Please create a new NotUntappd");
+            alertBox.display("No Instance Found", "Please create a new NotUntappd");
         }
     }
 
@@ -140,13 +145,14 @@ public class Menu {
     }
 
     private void confirmPremiumAccess() {
+        AlertBox alertBox = new AlertBox();
         boolean confirmed = LogInBox.display("Log-In", "Please enter credentials");
         if (confirmed) {
             System.out.println("Welcome to the premium version of NotUntappd");
             premium = true;
             borderPane.setRight(secondRightMenu());
         } else {
-            AlertBox.display("Access Denied", "Incorrect credentials");
+            alertBox.display("Access Denied", "Incorrect credentials");
         }
     }
 
@@ -192,6 +198,7 @@ public class Menu {
     }
 
     private void removeEntry() {
+        AlertBox alertBox = new AlertBox();
         ArrayList<String> nameAndBrewery = RemoveBox.display("Remove an Entry", "Please fill in the above details"
                 + "\n * = Mandatory fields");
         String beerName = nameAndBrewery.get(0);
@@ -203,9 +210,9 @@ public class Menu {
                 freeBeerList.removeBeerEntry(beerName, breweryName);
             }
         } catch (EmptyListException e) {
-            AlertBox.display("No Entries Found", "Please add entries before attempting to remove");
+            alertBox.display("No Entries Found", "Please add entries before attempting to remove");
         } catch (NotFoundException e) {
-            AlertBox.display("No Entry Found", "No such entry found, unable to remove");
+            alertBox.display("No Entry Found", "No such entry found, unable to remove");
         }
     }
 
@@ -260,7 +267,8 @@ public class Menu {
     }
 
     private void searchBeer() {
-        String string = SingleInputBox.display("Search by Beer Name", "Please enter a beer name");
+        SingleInputBox singleInputBox = new SingleInputBox();
+        String string = singleInputBox.display("Search by Beer Name", "Please enter a beer name");
         if (premium) {
             ArrayList<PremiumBeerEntry> found = premiumBeerList.findBeerName(string);
             if (found.isEmpty()) {
@@ -279,7 +287,8 @@ public class Menu {
     }
 
     private void searchBrewery() {
-        String string = SingleInputBox.display("Search by Brewery Name", "Please enter a brewery name");
+        SingleInputBox singleInputBox = new SingleInputBox();
+        String string = singleInputBox.display("Search by Brewery Name", "Please enter a brewery name");
         if (premium) {
             ArrayList<PremiumBeerEntry> found = premiumBeerList.searchBrewery(string);
             if (found.isEmpty()) {
@@ -298,7 +307,8 @@ public class Menu {
     }
 
     private void searchStyle() {
-        String string = SingleInputBox.display("Search by Brewery Name", "Please enter a brewery name");
+        SingleInputBox singleInputBox = new SingleInputBox();
+        String string = singleInputBox.display("Search by Brewery Name", "Please enter a brewery name");
 
         ArrayList<PremiumBeerEntry> found = premiumBeerList.searchStyle(string);
         if (found.isEmpty()) {
@@ -310,7 +320,8 @@ public class Menu {
     }
 
     private void filterRating() {
-        double rating = SingleIntInputBox.display("Search by Brewery Name", "Please enter a brewery name");
+        SingleIntInputBox singleIntInputBox = new SingleIntInputBox();
+        double rating = singleIntInputBox.display("Search by Brewery Name", "Please enter a brewery name");
         if (premium) {
             ArrayList<PremiumBeerEntry> found = premiumBeerList.searchRating(rating);
             if (found.isEmpty()) {

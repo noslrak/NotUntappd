@@ -14,7 +14,7 @@ public class SingleInputBox {
     private static TextField fileNameInput = new TextField();
 
     // EFFECTS: displays a generic String input box with given title and message
-    public static String display(String title, String message) {
+    public String display(String title, String message) {
         // Blocks events to other windows
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
